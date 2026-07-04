@@ -23,7 +23,7 @@ const PALETTE = [
   '#7a5c8e', '#55606b', '#58a08a', '#6e6a5e', '#c9b23a', '#a86378', '#54708c',
 ]
 
-function slugify(text: string): string {
+export function slugify(text: string): string {
   const slug = text
     .toLowerCase()
     .normalize('NFD')
@@ -49,6 +49,15 @@ function asGrams(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value)
     ? Math.max(0, Math.round(value))
     : undefined
+}
+
+/** Primer color lliure de la paleta; exhaurida, un to estable derivat del nom. */
+export function pickCategoryColor(usedColors: Set<string>, from: string): string {
+  const free = PALETTE.find((c) => !usedColors.has(c))
+  if (free) return free
+  let hash = 0
+  for (const ch of from) hash = (hash * 31 + (ch.codePointAt(0) ?? 0)) % 360
+  return `hsl(${hash}, 35%, 45%)`
 }
 
 export function parseItemsJson(text: string, data: GearData): ItemsImportResult {
@@ -78,13 +87,10 @@ export function parseItemsJson(text: string, data: GearData): ItemsImportResult 
 
   const usedIds = new Set(data.items.map((it) => it.id))
   const usedColors = new Set(data.categories.map((c) => c.color))
-  // Amb la paleta exhaurida, es deriva un to estable del nom de la categoria.
   const nextColor = (from: string) => {
-    const free = PALETTE.find((c) => !usedColors.has(c))
-    if (free) return free
-    let hash = 0
-    for (const ch of from) hash = (hash * 31 + (ch.codePointAt(0) ?? 0)) % 360
-    return `hsl(${hash}, 35%, 45%)`
+    const color = pickCategoryColor(usedColors, from)
+    usedColors.add(color)
+    return color
   }
 
   const findCategory = (raw: string): Category | undefined => {
@@ -120,7 +126,6 @@ export function parseItemsJson(text: string, data: GearData): ItemsImportResult 
         name: categoryRaw.charAt(0).toUpperCase() + categoryRaw.slice(1),
         color: nextColor(categoryRaw),
       }
-      usedColors.add(category.color)
       result.newCategories.push(category)
     }
 

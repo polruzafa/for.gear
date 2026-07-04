@@ -46,10 +46,11 @@ export type GroupMember = {
   /** Unitats que van al grup (per defecte, 1). */
   qty?: number
   /**
-   * En aquest grup es porta a sobre (roba posada, bastons a la mà…): surt a
-   * la llista però no compta en el pes transportat ni en el % de càrrega.
+   * Quantes d'aquestes unitats es porten a sobre en aquest grup (roba posada,
+   * bastons a la mà…): surten a la llista però no compten en el pes
+   * transportat ni en el % de càrrega. De 0 (omès) fins a qty.
    */
-  worn?: boolean
+  wornQty?: number
 }
 
 /**
@@ -86,13 +87,16 @@ export type Action =
   | { type: 'items/addMany'; items: GearItem[]; categories: Category[] }
   | { type: 'item/update'; item: GearItem }
   | { type: 'item/delete'; id: string }
+  | { type: 'category/add'; category: Category }
+  | { type: 'category/update'; category: Category }
+  | { type: 'category/delete'; id: string }
   | { type: 'group/add'; group: Group }
   | { type: 'group/rename'; id: string; name: string }
   | { type: 'group/delete'; id: string }
   | { type: 'group/addItem'; groupId: string; itemId: string }
   | { type: 'group/removeItem'; groupId: string; itemId: string }
   | { type: 'group/setItemQty'; groupId: string; itemId: string; qty: number }
-  | { type: 'group/toggleWorn'; groupId: string; itemId: string }
+  | { type: 'group/cycleWorn'; groupId: string; itemId: string }
   | { type: 'group/toggleGroup'; groupId: string; childId: string }
   | { type: 'data/import'; data: GearData }
   | { type: 'data/reset' }
@@ -123,6 +127,17 @@ function reducer(data: GearData, action: Action): GearData {
           members: g.members.filter((m) => m.id !== action.id),
         })),
       }
+    case 'category/add':
+      return { ...data, categories: [...data.categories, action.category] }
+    case 'category/update':
+      return {
+        ...data,
+        categories: data.categories.map((c) => (c.id === action.category.id ? action.category : c)),
+      }
+    // Suprimir una categoria NO suprimeix els seus elements: queden amb el
+    // categoryId antic i categoryOf() els mostra amb un color neutre.
+    case 'category/delete':
+      return { ...data, categories: data.categories.filter((c) => c.id !== action.id) }
     case 'group/add':
       return { ...data, groups: [...data.groups, action.group] }
     case 'group/rename':
@@ -152,17 +167,27 @@ function reducer(data: GearData, action: Action): GearData {
       const qty = Math.max(1, Math.round(action.qty))
       return updateGroup(data, action.groupId, (g) => ({
         ...g,
-        members: g.members.map((m) =>
-          m.id === action.itemId ? { ...m, qty: qty === 1 ? undefined : qty } : m,
-        ),
+        members: g.members.map((m) => {
+          if (m.id !== action.itemId) return m
+          const wornQty = Math.min(m.wornQty ?? 0, qty)
+          return {
+            ...m,
+            qty: qty === 1 ? undefined : qty,
+            wornQty: wornQty === 0 ? undefined : wornQty,
+          }
+        }),
       }))
     }
-    case 'group/toggleWorn':
+    // Cicle: 0 → 1 → … → qty (totes a sobre) → 0.
+    case 'group/cycleWorn':
       return updateGroup(data, action.groupId, (g) => ({
         ...g,
-        members: g.members.map((m) =>
-          m.id === action.itemId ? { ...m, worn: m.worn ? undefined : true } : m,
-        ),
+        members: g.members.map((m) => {
+          if (m.id !== action.itemId) return m
+          const qty = m.qty ?? 1
+          const next = ((m.wornQty ?? 0) + 1) % (qty + 1)
+          return { ...m, wornQty: next === 0 ? undefined : next }
+        }),
       }))
     case 'group/toggleGroup':
       return {
@@ -265,6 +290,20 @@ function migrate(raw: Record<string, unknown>): GearData {
       }),
     }
   }
+  // v5 → v6: el booleà `worn` de les pertinences passa a `wornQty` (quantes
+  // unitats es porten a sobre); worn=true equivalia a totes.
+  if (data.schemaVersion === 5) {
+    data = {
+      ...data,
+      schemaVersion: 6,
+      groups: (data.groups as any[]).map((g) => ({
+        ...g,
+        members: (g.members as any[]).map(({ worn, ...m }) =>
+          worn === true ? { ...m, wornQty: m.qty ?? 1 } : m,
+        ),
+      })),
+    }
+  }
   return data as GearData
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -357,30 +396,35 @@ export function groupPath(group: Group): string {
   return `${group.backpackId ? '/motxilles' : '/kits'}/${group.id}`
 }
 
-export type EffectiveMember = { qty: number; worn: boolean }
+export type EffectiveMember = { qty: number; wornQty: number }
 
 /**
  * Pertinences efectives del grup, grups imbricats inclosos (una motxilla
  * imbricada hi aporta la seva pròpia motxilla, perquè es carrega). No inclou
  * la motxilla pròpia del grup arrel. Si una mateixa peça arriba per dos
- * camins, val la quantitat MÉS GRAN (no la suma: és la mateixa peça física) i
- * es porta a sobre si ho és per qualsevol camí. A prova de cicles.
+ * camins, valen la quantitat i el «a sobre» MÉS GRANS (no la suma: és la
+ * mateixa peça física). A prova de cicles.
  */
 export function collectGroupMembers(data: GearData, group: Group): Map<string, EffectiveMember> {
   const acc = new Map<string, EffectiveMember>()
   const visited = new Set<string>()
-  const add = (id: string, qty: number, worn: boolean) => {
+  const add = (id: string, qty: number, wornQty: number) => {
     const prev = acc.get(id)
-    acc.set(id, prev ? { qty: Math.max(prev.qty, qty), worn: prev.worn || worn } : { qty, worn })
+    acc.set(
+      id,
+      prev
+        ? { qty: Math.max(prev.qty, qty), wornQty: Math.max(prev.wornQty, wornQty) }
+        : { qty, wornQty },
+    )
   }
   const walk = (g: Group) => {
     if (visited.has(g.id)) return
     visited.add(g.id)
-    for (const m of g.members) add(m.id, m.qty ?? 1, m.worn ?? false)
+    for (const m of g.members) add(m.id, m.qty ?? 1, Math.min(m.wornQty ?? 0, m.qty ?? 1))
     for (const childId of g.groupIds) {
       const child = groupOf(data, childId)
       if (!child) continue
-      if (child.backpackId) add(child.backpackId, 1, false)
+      if (child.backpackId) add(child.backpackId, 1, 0)
       walk(child)
     }
   }
@@ -407,8 +451,7 @@ export function groupUnitCount(data: GearData, group: Group): number {
 export function groupContentsWeight(data: GearData, group: Group): number {
   let sum = 0
   for (const [id, m] of collectGroupMembers(data, group)) {
-    if (m.worn) continue
-    sum += m.qty * (itemOf(data, id)?.weightGrams ?? 0)
+    sum += (m.qty - m.wornQty) * (itemOf(data, id)?.weightGrams ?? 0)
   }
   return sum
 }
@@ -417,7 +460,7 @@ export function groupContentsWeight(data: GearData, group: Group): number {
 export function groupWornWeight(data: GearData, group: Group): number {
   let sum = 0
   for (const [id, m] of collectGroupMembers(data, group)) {
-    if (m.worn) sum += m.qty * (itemOf(data, id)?.weightGrams ?? 0)
+    sum += m.wornQty * (itemOf(data, id)?.weightGrams ?? 0)
   }
   return sum
 }
@@ -432,16 +475,15 @@ export function groupWeight(data: GearData, group: Group): number {
 export function groupWeightByCategory(data: GearData, group: Group): Map<string, number> {
   const members = collectGroupMembers(data, group)
   if (group.backpackId && !members.has(group.backpackId)) {
-    members.set(group.backpackId, { qty: 1, worn: false })
+    members.set(group.backpackId, { qty: 1, wornQty: 0 })
   }
   const byCategory = new Map<string, number>()
   for (const [id, m] of members) {
-    if (m.worn) continue
     const item = itemOf(data, id)
     if (!item) continue
     byCategory.set(
       item.categoryId,
-      (byCategory.get(item.categoryId) ?? 0) + m.qty * (item.weightGrams ?? 0),
+      (byCategory.get(item.categoryId) ?? 0) + (m.qty - m.wornQty) * (item.weightGrams ?? 0),
     )
   }
   return byCategory

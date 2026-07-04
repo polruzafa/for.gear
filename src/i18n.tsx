@@ -89,6 +89,8 @@ const ca = {
   'group.needsTitle': 'Possibles oblits',
   'group.needsWarn': '«{name}» necessita: {needs}',
   'group.wornWeight': 'A sobre: {weight}',
+  'group.wornPartial': '{worn} de {qty} a sobre',
+  'group.cycleWorn': 'Canvia quantes unitats de «{name}» es porten a sobre',
 
   'packs.new': 'Prepara’n una',
   'packs.tripName': 'Nom de la sortida',
@@ -138,6 +140,15 @@ const ca = {
   'data.importError': 'No s’ha pogut llegir el fitxer JSON.',
   'data.resetConfirm':
     'Voleu descartar totes les dades i tornar a les dades d’exemple? Aquesta acció no es pot desfer.',
+
+  'data.categories': 'Categories',
+  'data.categoryName': 'Nom de la categoria',
+  'data.newCategoryPlaceholder': 'Categoria nova…',
+  'data.categoryColor': 'Color de «{name}»',
+  'data.deleteCategory': 'Suprimeix la categoria «{name}»',
+  'data.deleteCategoryConfirm':
+    'Voleu suprimir la categoria «{name}»? Els elements que la fan servir ({count}) no se suprimeixen.',
+  'data.deleteCategoryConfirmEmpty': 'Voleu suprimir la categoria «{name}»?',
 
   'data.addTitle': 'Afegeix elements en JSON',
   'data.addHint':
@@ -234,6 +245,8 @@ const es: Record<TKey, string> = {
   'group.needsTitle': 'Posibles olvidos',
   'group.needsWarn': '«{name}» necesita: {needs}',
   'group.wornWeight': 'Puesto: {weight}',
+  'group.wornPartial': '{worn} de {qty} puestos',
+  'group.cycleWorn': 'Cambiar cuántas unidades de «{name}» se llevan puestas',
 
   'packs.new': 'Preparar una',
   'packs.tripName': 'Nombre de la salida',
@@ -283,6 +296,15 @@ const es: Record<TKey, string> = {
   'data.importError': 'No se ha podido leer el archivo JSON.',
   'data.resetConfirm':
     '¿Quieres descartar todos los datos y volver a los datos de ejemplo? Esta acción no se puede deshacer.',
+
+  'data.categories': 'Categorías',
+  'data.categoryName': 'Nombre de la categoría',
+  'data.newCategoryPlaceholder': 'Categoría nueva…',
+  'data.categoryColor': 'Color de «{name}»',
+  'data.deleteCategory': 'Eliminar la categoría «{name}»',
+  'data.deleteCategoryConfirm':
+    '¿Quieres eliminar la categoría «{name}»? Los elementos que la usan ({count}) no se eliminan.',
+  'data.deleteCategoryConfirmEmpty': '¿Quieres eliminar la categoría «{name}»?',
 
   'data.addTitle': 'Añadir elementos en JSON',
   'data.addHint':
@@ -376,6 +398,8 @@ const en: Record<TKey, string> = {
   'group.needsTitle': 'Possible gaps',
   'group.needsWarn': '“{name}” needs: {needs}',
   'group.wornWeight': 'Worn: {weight}',
+  'group.wornPartial': '{worn} of {qty} worn',
+  'group.cycleWorn': 'Cycle how many of “{name}” are worn',
 
   'packs.new': 'Prepare one',
   'packs.tripName': 'Trip name',
@@ -425,6 +449,15 @@ const en: Record<TKey, string> = {
   'data.importError': 'Could not read the JSON file.',
   'data.resetConfirm':
     'Discard all data and go back to the sample data? This action cannot be undone.',
+
+  'data.categories': 'Categories',
+  'data.categoryName': 'Category name',
+  'data.newCategoryPlaceholder': 'New category…',
+  'data.categoryColor': 'Color of “{name}”',
+  'data.deleteCategory': 'Delete category “{name}”',
+  'data.deleteCategoryConfirm':
+    'Delete the category “{name}”? The items using it ({count}) are not deleted.',
+  'data.deleteCategoryConfirmEmpty': 'Delete the category “{name}”?',
 
   'data.addTitle': 'Add items as JSON',
   'data.addHint':

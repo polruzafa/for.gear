@@ -362,32 +362,36 @@ export default function GroupDetail() {
             <ul className="rows">
               {entries.map(({ member, item }) => {
                 const qty = member.qty ?? 1
-                const worn = member.worn === true
+                const wornQty = Math.min(member.wornQty ?? 0, qty)
+                const fullWorn = wornQty > 0 && wornQty === qty
+                const wornLabel =
+                  wornQty === 0
+                    ? null
+                    : fullWorn
+                      ? t('item.worn').toLowerCase()
+                      : t('group.wornPartial', { worn: wornQty, qty })
                 return (
                   <li key={item.id} className="row">
                     <span className="row-bar" style={{ background: category.color }} />
                     <Link to={`/element/${item.id}`} className="row-main inline-link">
                       <span className="row-name">{item.name}</span>
-                      {(item.placement || worn) && (
+                      {(item.placement || wornLabel) && (
                         <span className="row-tags">
-                          {[worn ? t('item.worn').toLowerCase() : null, item.placement]
-                            .filter(Boolean)
-                            .join(' · ')}
+                          {[wornLabel, item.placement].filter(Boolean).join(' · ')}
                         </span>
                       )}
                     </Link>
                     <span className="row-side">
-                      <span className={`mono row-weight${worn ? ' row-weight-worn' : ''}`}>
+                      <span className={`mono row-weight${fullWorn ? ' row-weight-worn' : ''}`}>
                         {qty > 1 && `${qty} × `}
                         {formatWeight(item.weightGrams === null ? null : qty * item.weightGrams)}
                       </span>
                       <span className="row-ctrls">
                         <button
-                          className={`ctrl-btn ctrl-worn${worn ? ' ctrl-worn-on' : ''}`}
-                          aria-label={t('item.worn')}
-                          aria-pressed={worn}
+                          className={`ctrl-btn ctrl-worn${wornQty > 0 ? ' ctrl-worn-on' : ''}`}
+                          aria-label={t('group.cycleWorn', { name: item.name })}
                           onClick={() =>
-                            dispatch({ type: 'group/toggleWorn', groupId: group.id, itemId: item.id })
+                            dispatch({ type: 'group/cycleWorn', groupId: group.id, itemId: item.id })
                           }
                         >
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -399,6 +403,9 @@ export default function GroupDetail() {
                               strokeLinejoin="round"
                             />
                           </svg>
+                          {wornQty > 0 && qty > 1 && (
+                            <span className="worn-badge mono">{wornQty}</span>
+                          )}
                         </button>
                         <button
                           className="ctrl-btn"

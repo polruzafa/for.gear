@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { useI18n } from '../i18n'
-import { parseItemsJson, type ImportIssue } from '../itemsImport'
+import { parseItemsJson, pickCategoryColor, slugify, type ImportIssue } from '../itemsImport'
 import { prunePhotos } from '../photos'
-import { formatWeight, parseGearData, seedData, useStore } from '../store'
+import { formatWeight, parseGearData, seedData, useStore, type Category } from '../store'
 
 export default function DataPage() {
   const { data, dispatch } = useStore()
@@ -33,6 +33,27 @@ export default function DataPage() {
       case 'dupId':
         return t('data.errDupId', { n: issue.n, name: issue.name })
     }
+  }
+
+  const [newCatName, setNewCatName] = useState('')
+
+  function addCategory(e: FormEvent) {
+    e.preventDefault()
+    const name = newCatName.trim()
+    if (!name) return
+    let id = slugify(name)
+    while (data.categories.some((c) => c.id === id)) id = `${id}-2`
+    const color = pickCategoryColor(new Set(data.categories.map((c) => c.color)), name)
+    dispatch({ type: 'category/add', category: { id, name, color } })
+    setNewCatName('')
+  }
+
+  function removeCategory(category: Category, count: number) {
+    const message =
+      count > 0
+        ? t('data.deleteCategoryConfirm', { name: category.name, count })
+        : t('data.deleteCategoryConfirmEmpty', { name: category.name })
+    if (window.confirm(message)) dispatch({ type: 'category/delete', id: category.id })
   }
 
   function addPasted() {
@@ -106,6 +127,53 @@ export default function DataPage() {
           <dd className="mono">{formatWeight(totalWeight)}</dd>
         </div>
       </dl>
+
+      <h2>{t('data.categories')}</h2>
+      <ul className="cat-rows">
+        {data.categories.map((c) => {
+          const count = data.items.filter((it) => it.categoryId === c.id).length
+          return (
+            <li key={c.id} className="cat-row">
+              <input
+                type="color"
+                value={/^#[0-9a-fA-F]{6}$/.test(c.color) ? c.color : '#6e6a5e'}
+                onChange={(e) =>
+                  dispatch({ type: 'category/update', category: { ...c, color: e.target.value } })
+                }
+                aria-label={t('data.categoryColor', { name: c.name })}
+              />
+              <input
+                className="cat-name"
+                value={c.name}
+                onChange={(e) =>
+                  dispatch({ type: 'category/update', category: { ...c, name: e.target.value } })
+                }
+                aria-label={t('data.categoryName')}
+              />
+              <span className="mono cat-count">{count}</span>
+              <button
+                className="row-remove"
+                aria-label={t('data.deleteCategory', { name: c.name })}
+                onClick={() => removeCategory(c, count)}
+              >
+                −
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+      <form className="cat-add" onSubmit={addCategory}>
+        <input
+          className="cat-name"
+          value={newCatName}
+          onChange={(e) => setNewCatName(e.target.value)}
+          placeholder={t('data.newCategoryPlaceholder')}
+          aria-label={t('data.categoryName')}
+        />
+        <button type="submit" className="btn" disabled={!newCatName.trim()}>
+          {t('gear.add')}
+        </button>
+      </form>
 
       <h2>{t('data.addTitle')}</h2>
       <p className="hint">{t('data.addHint')}</p>

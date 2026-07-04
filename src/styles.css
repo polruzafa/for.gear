@@ -272,6 +272,15 @@ h2 {
   display: none;
 }
 
+/* Amb ratolí no hi ha gest de desplaçament lateral: les etiquetes s'ajusten
+   en diverses línies en lloc de desbordar. */
+@media (hover: hover) and (pointer: fine) {
+  .chips {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -562,6 +571,76 @@ h2 {
   color: var(--warn);
 }
 
+/* ── Gestió de categories ── */
+
+.cat-rows {
+  list-style: none;
+  margin: 6px 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cat-row,
+.cat-add {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cat-row input[type='color'] {
+  width: 26px;
+  height: 26px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--card);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.cat-name {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.cat-name:hover,
+.cat-name:focus {
+  border-color: var(--line);
+  background: var(--card);
+}
+
+/* El camp per afegir-ne sí que es mostra sempre com a camp */
+.cat-add .cat-name {
+  border-color: var(--line);
+  background: var(--card);
+}
+
+.cat-count {
+  color: var(--ink-soft);
+  min-width: 2ch;
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.cat-row .row-remove {
+  width: 24px;
+  height: 24px;
+  font-size: 0.95rem;
+}
+
+.cat-add {
+  margin-bottom: 4px;
+}
+
 /* ── Caixa d'enganxar JSON ── */
 
 .paste-box {
@@ -832,7 +911,23 @@ h2 {
 }
 
 .ctrl-worn {
+  position: relative;
   color: var(--ink-soft);
+}
+
+.worn-badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--warn);
+  color: var(--paper);
+  font-size: 0.62rem;
+  line-height: 15px;
+  text-align: center;
 }
 
 .ctrl-worn-on {
