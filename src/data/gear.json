@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 2,
+  "categories": [
+    { "id": "mochilas", "name": "Mochilas", "color": "#8a5a3b" },
+    { "id": "marcha", "name": "Marcha", "color": "#5e7d4f" },
+    { "id": "descanso", "name": "Descanso", "color": "#b5854e" },
+    { "id": "dormir", "name": "Dormir", "color": "#5c6fa8" },
+    { "id": "refugio", "name": "Refugio", "color": "#4e7d8e" },
+    { "id": "cocina", "name": "Cocina", "color": "#c99a3c" },
+    { "id": "fuego", "name": "Fuego", "color": "#b0413e" },
+    { "id": "combustible", "name": "Combustible", "color": "#7a5c8e" },
+    { "id": "herramientas", "name": "Herramientas", "color": "#55606b" },
+    { "id": "limpieza", "name": "Limpieza", "color": "#58a08a" },
+    { "id": "campamento", "name": "Campamento", "color": "#6e6a5e" }
+  ],
+  "items": [
+    {
+      "id": "wwago-sit-pad",
+      "name": "aislante culo WWAGO",
+      "categoryId": "descanso",
+      "tags": ["sit-pad", "ultralight", "campamento"],
+      "weightGrams": 25,
+      "notes": "Muy recomendable. Se usa constantemente durante la ruta.",
+      "photo": null,
+      "placement": "bolsillo exterior"
+    },
+    {
+      "id": "arpenaz-200-pole",
+      "name": "palo trekking ARPENAZ 200",
+      "categoryId": "marcha",
+      "tags": ["trekking", "baston"],
+      "weightGrams": 235,
+      "notes": "Pendiente confirmar si el peso es por unidad o por pareja.",
+      "photo": null,
+      "placement": "en la mano"
+    },
+    {
+      "id": "forclaz-mt500-air",
+      "name": "trekking pad FORCLAZ mt 500 air",
+      "categoryId": "dormir",
+      "tags": ["colchoneta", "inflable"],
+      "weightGrams": 620,
+      "notes": "Peso incluyendo funda.",
+      "photo": null,
+      "placement": "centro inferior"
+    },
+    {
+      "id": "quechua-bivy-old",
+      "name": "funda vivac QUECHUA (vieja)",
+      "categoryId": "refugio",
+      "tags": ["vivac", "verano"],
+      "weightGrams": 420,
+      "notes": "Alternativa ligera a la funda Gore-Tex.",
+      "photo": null,
+      "placement": "fondo"
+    },
+    {
+      "id": "et-goretex-bivy",
+      "name": "funda vivac goretex ET (ejercito tierra)",
+      "categoryId": "refugio",
+      "tags": ["vivac", "goretex", "militar"],
+      "weightGrams": 600,
+      "notes": "Más pesada pero mucho más protectora.",
+      "photo": null,
+      "placement": "fondo"
+    },
+    {
+      "id": "forclaz-foam-pad",
+      "name": "esterilla de suelo para dormir FORCLAZ",
+      "categoryId": "dormir",
+      "tags": ["foam", "ccf"],
+      "weightGrams": 400,
+      "notes": "También aporta estructura a la mochila frameless.",
+      "photo": null,
+      "placement": "exterior"
+    },
+    {
+      "id": "forclaz-trek-pillow",
+      "name": "FORCLAZ trek pillow",
+      "categoryId": "dormir",
+      "tags": ["almohada"],
+      "weightGrams": 170,
+      "notes": "Solo para campamento.",
+      "photo": null,
+      "placement": "fondo"
+    },
+    {
+      "id": "hengduan-usb-pump",
+      "name": "hinchador electrico usb HENGDUAN",
+      "categoryId": "dormir",
+      "tags": ["inflador", "usb"],
+      "weightGrams": 80,
+      "notes": "Solo para colchonetas inflables.",
+      "photo": null,
+      "placement": "bolsa dormir"
+    },
+    {
+      "id": "et-goretex-tarp",
+      "name": "tarp goretex ET con paracord ya preparado",
+      "categoryId": "refugio",
+      "tags": ["tarp", "goretex", "militar"],
+      "weightGrams": 715,
+      "notes": "Cordino ya preparado.",
+      "photo": null,
+      "placement": "parte superior"
+    },
+    {
+      "id": "ul-pegs-10",
+      "name": "10 piquetas UL",
+      "categoryId": "refugio",
+      "tags": ["piquetas"],
+      "weightGrams": 140,
+      "notes": "10 unidades.",
+      "photo": null,
+      "placement": "junto al tarp"
+    },
+    {
+      "id": "onewind-quilt",
+      "name": "ONEWIND quilt para dormir",
+      "categoryId": "dormir",
+      "tags": ["quilt", "aislamiento"],
+      "weightGrams": 1111,
+      "notes": "Elemento principal del sistema de dormir.",
+      "photo": null,
+      "placement": "fondo"
+    },
+    {
+      "id": "lixada-slow-alcohol-stove",
+      "name": "hornillo de alcohol LIXADA slow",
+      "categoryId": "cocina",
+      "tags": ["hornillo", "alcohol"],
+      "weightGrams": 15,
+      "notes": "Parte del kit (1).",
+      "photo": null,
+      "kit": 1
+    },
+    {
+      "id": "lixada-2in1-windscreen",
+      "name": "cortavientos stand 2en1 LIXADA",
+      "categoryId": "cocina",
+      "tags": ["windshield", "alcohol"],
+      "weightGrams": 14,
+      "notes": "Parte del kit (1).",
+      "photo": null,
+      "kit": 1
+    },
+    {
+      "id": "titanium-66mm-windscreen",
+      "name": "cortavientos stand 2en1 titanio 66mm",
+      "categoryId": "cocina",
+      "tags": ["windshield", "titanio"],
+      "weightGrams": 18,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "bic-mini",
+      "name": "mechero BIC mini",
+      "categoryId": "fuego",
+      "tags": ["mechero", "bic"],
+      "weightGrams": 11,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "clipper-mini",
+      "name": "mechero CLIPPER mini",
+      "categoryId": "fuego",
+      "tags": ["mechero", "clipper"],
+      "weightGrams": 10,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "clipper-normal",
+      "name": "mechero CLIPPER normal",
+      "categoryId": "fuego",
+      "tags": ["mechero", "clipper"],
+      "weightGrams": 13,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "firemaple-petrel-g3",
+      "name": "olla FIREMAPLE Petrel G3 (sin funda)",
+      "categoryId": "cocina",
+      "tags": ["olla", "gas"],
+      "weightGrams": 168,
+      "notes": "",
+      "photo": null,
+      "caseWeightGrams": 20
+    },
+    {
+      "id": "toaks-500-pot",
+      "name": "olla TOAKS titanium 500 (sin funda)",
+      "categoryId": "cocina",
+      "tags": ["olla", "titanio", "ultralight"],
+      "weightGrams": 99,
+      "notes": "",
+      "photo": null,
+      "caseWeightGrams": 13
+    },
+    {
+      "id": "optimus-long-spoon",
+      "name": "cuchara larga titanium OPTIMUS",
+      "categoryId": "cocina",
+      "tags": ["cuchara", "titanio"],
+      "weightGrams": 19,
+      "notes": "Ideal para bolsas de comida liofilizada.",
+      "photo": null
+    },
+    {
+      "id": "outlery-titanium-set",
+      "name": "set de cuberteria OUTLERY titanium (con caja)",
+      "categoryId": "cocina",
+      "tags": ["cuberteria", "titanio"],
+      "weightGrams": 154,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "diy-tripod-new",
+      "name": "tripode casero (nuevo) para olla",
+      "categoryId": "cocina",
+      "tags": ["DIY", "soporte"],
+      "weightGrams": 19,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "diy-bipod-old",
+      "name": "bipode casero (viejo) para olla",
+      "categoryId": "cocina",
+      "tags": ["DIY", "soporte"],
+      "weightGrams": 19,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "portugal-knife-fork",
+      "name": "2en1 navaja y tenedor PORTUGAL",
+      "categoryId": "herramientas",
+      "tags": ["navaja", "tenedor"],
+      "weightGrams": 24,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "opinel-no8",
+      "name": "navaja OPINEL n8",
+      "categoryId": "herramientas",
+      "tags": ["opinel", "navaja"],
+      "weightGrams": 43,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "campeak-fuel-bottle-500",
+      "name": "botella multifuel CAMPEAK 0,5L",
+      "categoryId": "combustible",
+      "tags": ["fuel", "alcohol"],
+      "weightGrams": 97,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "mess-tin-kit",
+      "name": "mess tin SIN MARCA",
+      "categoryId": "cocina",
+      "tags": ["mess-tin"],
+      "weightGrams": 177,
+      "notes": "Parte del kit (2).",
+      "photo": null,
+      "kit": 2
+    },
+    {
+      "id": "bamboo-cutting-board",
+      "name": "tabla de corte bambú SIN MARCA",
+      "categoryId": "cocina",
+      "tags": ["tabla"],
+      "weightGrams": 98,
+      "notes": "Parte del kit (2).",
+      "photo": null,
+      "kit": 2
+    },
+    {
+      "id": "steamer-rack",
+      "name": "rejilla vaporera SIN MARCA",
+      "categoryId": "cocina",
+      "tags": ["vaporera"],
+      "weightGrams": 47,
+      "notes": "Parte del kit (2).",
+      "photo": null,
+      "kit": 2
+    },
+    {
+      "id": "brs-3000t",
+      "name": "hornillo de gas BRS 3000t titanio (con funda)",
+      "categoryId": "cocina",
+      "tags": ["hornillo", "gas", "ultralight"],
+      "weightGrams": 28,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "decathlon-steel-cup-250",
+      "name": "taza de acero DECATHLON 0.25L",
+      "categoryId": "cocina",
+      "tags": ["taza"],
+      "weightGrams": 71,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "folding-titanium-spork",
+      "name": "spork plegable titanio (con funda)",
+      "categoryId": "cocina",
+      "tags": ["spork", "titanio"],
+      "weightGrams": 21,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "tito-short-spork",
+      "name": "sport corto TITO titanium (con funda)",
+      "categoryId": "cocina",
+      "tags": ["spork", "titanio"],
+      "weightGrams": 17,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "diy-tall-windscreen",
+      "name": "cortavientos casero alto",
+      "categoryId": "cocina",
+      "tags": ["DIY", "windshield"],
+      "weightGrams": 12,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "diy-short-windscreen",
+      "name": "cortavientos casero corto",
+      "categoryId": "cocina",
+      "tags": ["DIY", "windshield"],
+      "weightGrams": 8,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "cut-sponge",
+      "name": "estropajo cortado",
+      "categoryId": "limpieza",
+      "tags": ["cocina"],
+      "weightGrams": 3,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "microfiber-cloth",
+      "name": "paño microfibra",
+      "categoryId": "limpieza",
+      "tags": ["microfibra"],
+      "weightGrams": 20,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "ise-mount-fuel-bottle",
+      "name": "botella ISE MOUNT outdoor para fuel",
+      "categoryId": "combustible",
+      "tags": ["fuel"],
+      "weightGrams": 30,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "tektoba-chs",
+      "name": "hornillo de alcohol TEKTOBA CHS",
+      "categoryId": "cocina",
+      "tags": ["hornillo", "alcohol", "ultralight"],
+      "weightGrams": 8,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "efrevo-mini",
+      "name": "hornillo de alcohol eFREVO mini",
+      "categoryId": "cocina",
+      "tags": ["hornillo", "alcohol", "ultralight"],
+      "weightGrams": 6,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "efrevo-max",
+      "name": "hornillo de alcohol eFREVO max",
+      "categoryId": "cocina",
+      "tags": ["hornillo", "alcohol", "ultralight"],
+      "weightGrams": 7,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "quechua-large-steel-plate",
+      "name": "plato de acero QUECHUA grande",
+      "categoryId": "cocina",
+      "tags": ["camping"],
+      "weightGrams": 230,
+      "notes": "Más apropiado para camping que para trekking.",
+      "photo": null
+    },
+    {
+      "id": "diy-folding-table",
+      "name": "mini mesita plegable DIY",
+      "categoryId": "campamento",
+      "tags": ["DIY", "camping"],
+      "weightGrams": 406,
+      "notes": "Muy interesante para bushcraft o camping base.",
+      "photo": null
+    },
+    {
+      "id": "opinel-sheath",
+      "name": "funda opinel",
+      "categoryId": "herramientas",
+      "tags": ["opinel", "funda"],
+      "weightGrams": 30,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "bahco-belt-knife",
+      "name": "cuchillo BAHCO con funda para cinturón",
+      "categoryId": "herramientas",
+      "tags": ["bahco", "cuchillo", "bushcraft"],
+      "weightGrams": 115,
+      "notes": "Muy útil para bushcraft y trabajos de campamento.",
+      "photo": null
+    }
+  ],
+  "packs": []
+}
