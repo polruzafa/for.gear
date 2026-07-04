@@ -79,6 +79,7 @@ const ca = {
   'kit.delete': 'Suprimeix el kit',
   'kit.confirmDelete': 'Voleu suprimir el kit «{name}»? El material no es perd.',
   'kit.empty': 'El kit és buit.',
+  'group.rename': 'Canvia el nom',
 
   'packs.new': 'Prepara’n una',
   'packs.tripName': 'Nom de la sortida',
@@ -200,6 +201,7 @@ const es: Record<TKey, string> = {
   'kit.delete': 'Eliminar el kit',
   'kit.confirmDelete': '¿Quieres eliminar el kit «{name}»? El material no se pierde.',
   'kit.empty': 'El kit está vacío.',
+  'group.rename': 'Cambiar el nombre',
 
   'packs.new': 'Preparar una',
   'packs.tripName': 'Nombre de la salida',
@@ -318,6 +320,7 @@ const en: Record<TKey, string> = {
   'kit.delete': 'Delete kit',
   'kit.confirmDelete': 'Delete the kit “{name}”? Your gear is not lost.',
   'kit.empty': 'The kit is empty.',
+  'group.rename': 'Rename',
 
   'packs.new': 'Prepare one',
   'packs.tripName': 'Trip name',

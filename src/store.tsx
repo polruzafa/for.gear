@@ -65,6 +65,7 @@ export type Action =
   | { type: 'item/update'; item: GearItem }
   | { type: 'item/delete'; id: string }
   | { type: 'group/add'; group: Group }
+  | { type: 'group/rename'; id: string; name: string }
   | { type: 'group/delete'; id: string }
   | { type: 'group/toggleItem'; groupId: string; itemId: string }
   | { type: 'group/toggleGroup'; groupId: string; childId: string }
@@ -93,6 +94,11 @@ function reducer(data: GearData, action: Action): GearData {
       }
     case 'group/add':
       return { ...data, groups: [...data.groups, action.group] }
+    case 'group/rename':
+      return {
+        ...data,
+        groups: data.groups.map((g) => (g.id === action.id ? { ...g, name: action.name } : g)),
+      }
     case 'group/delete':
       return {
         ...data,

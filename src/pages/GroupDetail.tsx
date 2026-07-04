@@ -27,6 +27,8 @@ export default function GroupDetail() {
   const navigate = useNavigate()
   const [picking, setPicking] = useState(false)
   const [pickQuery, setPickQuery] = useState('')
+  const [editingName, setEditingName] = useState(false)
+  const [nameDraft, setNameDraft] = useState('')
 
   const group = id ? groupOf(data, id) : undefined
   const isPack = group?.backpackId != null
@@ -90,6 +92,15 @@ export default function GroupDetail() {
   const pct = groupLoadPercent(data, group)
   const isEmpty = group.itemIds.length === 0 && group.groupIds.length === 0
 
+  function acceptRename() {
+    if (!group) return
+    const trimmed = nameDraft.trim()
+    if (trimmed && trimmed !== group.name) {
+      dispatch({ type: 'group/rename', id: group.id, name: trimmed })
+    }
+    setEditingName(false)
+  }
+
   function removeGroup() {
     if (!group) return
     const message = isPack
@@ -105,7 +116,61 @@ export default function GroupDetail() {
       <Link to={listPath} className="backlink">
         ← {isPack ? t('tabs.packs') : t('tabs.kits')}
       </Link>
-      <h1 className="detail-name">{group.name}</h1>
+      {editingName ? (
+        <form
+          className="rename"
+          onSubmit={(e) => {
+            e.preventDefault()
+            acceptRename()
+          }}
+        >
+          <input
+            value={nameDraft}
+            onChange={(e) => setNameDraft(e.target.value)}
+            onKeyDown={(e) => e.key === 'Escape' && setEditingName(false)}
+            autoFocus
+            aria-label={t('group.rename')}
+          />
+          <button type="submit" className="icon-btn icon-btn-ok" aria-label={t('common.save')}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="icon-btn"
+            aria-label={t('common.cancel')}
+            onClick={() => setEditingName(false)}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </form>
+      ) : (
+        <h1 className="detail-name detail-name-row">
+          {group.name}
+          <button
+            className="icon-btn"
+            aria-label={t('group.rename')}
+            onClick={() => {
+              setNameDraft(group.name)
+              setEditingName(true)
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4 20l1.2-4.2L15.5 5.5a2.1 2.1 0 0 1 3 3L8.2 18.8 4 20Zm9.5-12.5l3 3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </h1>
+      )}
 
       {backpack && (
         <p className="card-sub">

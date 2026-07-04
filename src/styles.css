@@ -569,6 +569,65 @@ h2 {
   margin: 10px 0 0;
 }
 
+/* ── Edició ràpida del nom ── */
+
+.detail-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.icon-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.icon-btn-ok {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.rename {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0.4em 0;
+}
+
+.rename input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 .total-weight + .hint {
   margin-top: 0;
 }
