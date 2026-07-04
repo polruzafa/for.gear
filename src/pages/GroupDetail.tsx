@@ -12,8 +12,10 @@ import {
   groupLoadPercent,
   groupOf,
   groupPath,
+  groupUnmetNeeds,
   groupWeight,
   groupWeightByCategory,
+  groupWornWeight,
   itemOf,
   useStore,
   type GearItem,
@@ -90,6 +92,7 @@ export default function GroupDetail() {
   )
 
   const pct = groupLoadPercent(data, group)
+  const unmetNeeds = groupUnmetNeeds(data, group)
   const isEmpty = group.itemIds.length === 0 && group.groupIds.length === 0
 
   function acceptRename() {
@@ -184,6 +187,11 @@ export default function GroupDetail() {
 
       <p className="total-weight mono">{formatWeight(groupWeight(data, group))}</p>
       {isPack && <p className="hint">{t('pack.totalHint')}</p>}
+      {groupWornWeight(data, group) > 0 && (
+        <p className="hint mono">
+          {t('group.wornWeight', { weight: formatWeight(groupWornWeight(data, group)) })}
+        </p>
+      )}
 
       {backpack?.maxLoadGrams != null && pct != null && (
         <div className={`loadgauge${pct > 100 ? ' loadgauge-over' : ''}`}>
@@ -209,6 +217,19 @@ export default function GroupDetail() {
               </>
             )}
           </p>
+        </div>
+      )}
+
+      {unmetNeeds.length > 0 && (
+        <div className="needs-warn" role="note">
+          <p className="needs-warn-title">{t('group.needsTitle')}</p>
+          <ul>
+            {unmetNeeds.map((unmet) => (
+              <li key={unmet.item.id}>
+                {t('group.needsWarn', { name: unmet.item.name, needs: unmet.needs.join(', ') })}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
@@ -342,9 +363,17 @@ export default function GroupDetail() {
                   <span className="row-bar" style={{ background: category.color }} />
                   <Link to={`/element/${item.id}`} className="row-main inline-link">
                     <span className="row-name">{item.name}</span>
-                    {item.placement && <span className="row-tags">{item.placement}</span>}
+                    {(item.placement || item.worn) && (
+                      <span className="row-tags">
+                        {[item.worn ? t('item.worn').toLowerCase() : null, item.placement]
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </span>
+                    )}
                   </Link>
-                  <span className="mono row-weight">{formatWeight(item.weightGrams)}</span>
+                  <span className={`mono row-weight${item.worn ? ' row-weight-worn' : ''}`}>
+                    {formatWeight(item.weightGrams)}
+                  </span>
                   <button
                     className="row-remove"
                     aria-label={t('pack.removeItem', { name: item.name })}

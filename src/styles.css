@@ -11,6 +11,9 @@
   --accent: #e8541d;
   --accent-ink: #fff8f3;
   --danger: #b0413e;
+  --warn: #8a6a1f;
+  --warn-bg: rgba(201, 154, 60, 0.14);
+  --ok: #5e7d4f;
 
   --font-display: 'Avenir Next Condensed', 'Arial Narrow', 'Roboto Condensed', system-ui, sans-serif;
   --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -29,6 +32,9 @@
     --accent: #f2622a;
     --accent-ink: #fff8f3;
     --danger: #d16663;
+    --warn: #d8b25e;
+    --warn-bg: rgba(201, 154, 60, 0.14);
+    --ok: #86a874;
   }
 }
 
@@ -375,6 +381,12 @@ h2 {
   flex-shrink: 0;
 }
 
+/* Pes d'un element portat a sobre: hi és, però no compta */
+.row-weight-worn {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
 .row-plus,
 .row-remove {
   flex-shrink: 0;
@@ -518,6 +530,67 @@ h2 {
 .load-over {
   color: var(--danger);
   font-weight: 600;
+}
+
+/* ── Avisos de dependències ── */
+
+.needs-warn {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--warn);
+  border-radius: var(--radius);
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-size: 0.85rem;
+}
+
+.needs-warn-title {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+.needs-warn ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.tag-needs {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+/* ── Caixa d'enganxar JSON ── */
+
+.paste-box {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 0.82rem;
+  resize: vertical;
+}
+
+.paste-issues {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.paste-ok {
+  color: var(--ok);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 /* ── Detall ── */
@@ -714,6 +787,19 @@ h2 {
 
 .form textarea {
   resize: vertical;
+}
+
+.form .check-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.form .check-row input[type='checkbox'] {
+  width: 19px;
+  height: 19px;
+  margin: 0;
+  accent-color: var(--accent);
 }
 
 .specs-editor {

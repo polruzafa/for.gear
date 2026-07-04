@@ -50,6 +50,8 @@ const ca = {
   'item.maxLoad': 'Càrrega màxima',
   'item.specs': 'Característiques',
   'item.tags': 'Etiquetes',
+  'item.needs': 'Necessita',
+  'item.worn': 'A sobre',
   'item.notes': 'Notes',
   'item.inPacks': 'Es troba a',
   'item.confirmDelete': 'Voleu suprimir «{name}»? També es traurà de totes les motxilles i kits.',
@@ -71,6 +73,10 @@ const ca = {
   'form.specRemove': 'Treu la característica',
   'form.tagsHint': '(separades per comes)',
   'form.tagsPlaceholder': 'ultralight, hivern',
+  'form.needsHint': '(etiquetes d’altres elements que ho cobreixen, separades per comes)',
+  'form.needsPlaceholder': 'fuel, mechero',
+  'form.worn': 'Es porta a sobre',
+  'form.wornHint': '(no compta en el pes de la motxilla)',
 
   'kits.new': 'Crea un kit',
   'kits.name': 'Nom del kit',
@@ -80,6 +86,9 @@ const ca = {
   'kit.confirmDelete': 'Voleu suprimir el kit «{name}»? El material no es perd.',
   'kit.empty': 'El kit és buit.',
   'group.rename': 'Canvia el nom',
+  'group.needsTitle': 'Possibles oblits',
+  'group.needsWarn': '«{name}» necessita: {needs}',
+  'group.wornWeight': 'A sobre: {weight}',
 
   'packs.new': 'Prepara’n una',
   'packs.tripName': 'Nom de la sortida',
@@ -129,6 +138,20 @@ const ca = {
   'data.importError': 'No s’ha pogut llegir el fitxer JSON.',
   'data.resetConfirm':
     'Voleu descartar totes les dades i tornar a les dades d’exemple? Aquesta acció no es pot desfer.',
+
+  'data.addTitle': 'Afegeix elements en JSON',
+  'data.addHint':
+    'Enganxeu un element o una llista d’elements en JSON. S’accepten els camps de l’app (name, categoryId, weightGrams…) i també els del format original (item, categoria, peso_g…). Les categories noves es creen soles.',
+  'data.addValid': 'Es poden afegir {items} elements.',
+  'data.addValidCats': 'Es crearan {cats} categories noves.',
+  'data.addButton': 'Afegeix els elements',
+  'data.addDone': 'S’han afegit {items} elements.',
+  'data.errParse': 'JSON no vàlid: {detail}',
+  'data.errNotList': 'Cal un objecte o una llista d’objectes.',
+  'data.errNoName': 'L’element {n} no té nom.',
+  'data.errNoCategory': 'L’element {n} («{name}») no té categoria.',
+  'data.errBadWeight': 'L’element {n} («{name}») té un pes que no és un nombre.',
+  'data.errDupId': 'L’element {n} («{name}») té un identificador que ja existeix.',
 } as const
 
 export type TKey = keyof typeof ca
@@ -171,6 +194,8 @@ const es: Record<TKey, string> = {
   'item.maxLoad': 'Carga máxima',
   'item.specs': 'Características',
   'item.tags': 'Etiquetas',
+  'item.needs': 'Necesita',
+  'item.worn': 'Puesto',
   'item.notes': 'Notas',
   'item.inPacks': 'Se encuentra en',
   'item.confirmDelete':
@@ -193,6 +218,10 @@ const es: Record<TKey, string> = {
   'form.specRemove': 'Quitar la característica',
   'form.tagsHint': '(separadas por comas)',
   'form.tagsPlaceholder': 'ultralight, invierno',
+  'form.needsHint': '(etiquetas de otros elementos que lo cubren, separadas por comas)',
+  'form.needsPlaceholder': 'fuel, mechero',
+  'form.worn': 'Se lleva puesto',
+  'form.wornHint': '(no cuenta en el peso de la mochila)',
 
   'kits.new': 'Crear un kit',
   'kits.name': 'Nombre del kit',
@@ -202,6 +231,9 @@ const es: Record<TKey, string> = {
   'kit.confirmDelete': '¿Quieres eliminar el kit «{name}»? El material no se pierde.',
   'kit.empty': 'El kit está vacío.',
   'group.rename': 'Cambiar el nombre',
+  'group.needsTitle': 'Posibles olvidos',
+  'group.needsWarn': '«{name}» necesita: {needs}',
+  'group.wornWeight': 'Puesto: {weight}',
 
   'packs.new': 'Preparar una',
   'packs.tripName': 'Nombre de la salida',
@@ -251,6 +283,20 @@ const es: Record<TKey, string> = {
   'data.importError': 'No se ha podido leer el archivo JSON.',
   'data.resetConfirm':
     '¿Quieres descartar todos los datos y volver a los datos de ejemplo? Esta acción no se puede deshacer.',
+
+  'data.addTitle': 'Añadir elementos en JSON',
+  'data.addHint':
+    'Pega un elemento o una lista de elementos en JSON. Se aceptan los campos de la app (name, categoryId, weightGrams…) y también los del formato original (item, categoria, peso_g…). Las categorías nuevas se crean solas.',
+  'data.addValid': 'Se pueden añadir {items} elementos.',
+  'data.addValidCats': 'Se crearán {cats} categorías nuevas.',
+  'data.addButton': 'Añadir los elementos',
+  'data.addDone': 'Se han añadido {items} elementos.',
+  'data.errParse': 'JSON no válido: {detail}',
+  'data.errNotList': 'Hace falta un objeto o una lista de objetos.',
+  'data.errNoName': 'El elemento {n} no tiene nombre.',
+  'data.errNoCategory': 'El elemento {n} («{name}») no tiene categoría.',
+  'data.errBadWeight': 'El elemento {n} («{name}») tiene un peso que no es un número.',
+  'data.errDupId': 'El elemento {n} («{name}») tiene un identificador que ya existe.',
 }
 
 const en: Record<TKey, string> = {
@@ -291,6 +337,8 @@ const en: Record<TKey, string> = {
   'item.maxLoad': 'Max load',
   'item.specs': 'Specs',
   'item.tags': 'Tags',
+  'item.needs': 'Needs',
+  'item.worn': 'Worn',
   'item.notes': 'Notes',
   'item.inPacks': 'Found in',
   'item.confirmDelete': 'Delete “{name}”? It will also be removed from every pack and kit.',
@@ -312,6 +360,10 @@ const en: Record<TKey, string> = {
   'form.specRemove': 'Remove spec',
   'form.tagsHint': '(comma-separated)',
   'form.tagsPlaceholder': 'ultralight, winter',
+  'form.needsHint': '(tags of other items that cover it, comma-separated)',
+  'form.needsPlaceholder': 'fuel, lighter',
+  'form.worn': 'Worn, not packed',
+  'form.wornHint': '(does not count toward pack weight)',
 
   'kits.new': 'Create a kit',
   'kits.name': 'Kit name',
@@ -321,6 +373,9 @@ const en: Record<TKey, string> = {
   'kit.confirmDelete': 'Delete the kit “{name}”? Your gear is not lost.',
   'kit.empty': 'The kit is empty.',
   'group.rename': 'Rename',
+  'group.needsTitle': 'Possible gaps',
+  'group.needsWarn': '“{name}” needs: {needs}',
+  'group.wornWeight': 'Worn: {weight}',
 
   'packs.new': 'Prepare one',
   'packs.tripName': 'Trip name',
@@ -370,6 +425,20 @@ const en: Record<TKey, string> = {
   'data.importError': 'Could not read the JSON file.',
   'data.resetConfirm':
     'Discard all data and go back to the sample data? This action cannot be undone.',
+
+  'data.addTitle': 'Add items as JSON',
+  'data.addHint':
+    'Paste an item or a list of items as JSON. Both the app’s fields (name, categoryId, weightGrams…) and the original format (item, categoria, peso_g…) are accepted. New categories are created automatically.',
+  'data.addValid': '{items} items ready to add.',
+  'data.addValidCats': '{cats} new categories will be created.',
+  'data.addButton': 'Add the items',
+  'data.addDone': '{items} items added.',
+  'data.errParse': 'Invalid JSON: {detail}',
+  'data.errNotList': 'Provide an object or a list of objects.',
+  'data.errNoName': 'Item {n} has no name.',
+  'data.errNoCategory': 'Item {n} (“{name}”) has no category.',
+  'data.errBadWeight': 'Item {n} (“{name}”) has a weight that is not a number.',
+  'data.errDupId': 'Item {n} (“{name}”) has an id that already exists.',
 }
 
 const dictionaries: Record<Lang, Record<TKey, string>> = { ca, es, en }

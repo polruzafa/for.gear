@@ -21,6 +21,8 @@ export default function ItemForm() {
     existing?.maxLoadGrams != null ? (existing.maxLoadGrams / 1000).toString() : '',
   )
   const [tags, setTags] = useState(existing?.tags.join(', ') ?? '')
+  const [needs, setNeeds] = useState(existing?.needs?.join(', ') ?? '')
+  const [worn, setWorn] = useState(existing?.worn ?? false)
   const [notes, setNotes] = useState(existing?.notes ?? '')
   const [specs, setSpecs] = useState<{ label: string; value: string }[]>(
     existing?.specs?.map((s) => ({ ...s })) ?? [],
@@ -45,6 +47,10 @@ export default function ItemForm() {
     e.preventDefault()
     const trimmed = name.trim()
     if (!trimmed) return
+    const cleanNeeds = needs
+      .split(',')
+      .map((need) => need.trim())
+      .filter(Boolean)
     const cleanSpecs = specs
       .map((s) => ({ label: s.label.trim(), value: s.value.trim() }))
       .filter((s) => s.label && s.value)
@@ -64,6 +70,8 @@ export default function ItemForm() {
         categoryId !== BACKPACK_CATEGORY || maxLoad.trim() === ''
           ? undefined
           : Math.max(0, Math.round(Number(maxLoad.replace(',', '.')) * 1000)),
+      needs: cleanNeeds.length > 0 ? cleanNeeds : undefined,
+      worn: worn || undefined,
       specs: cleanSpecs.length > 0 ? cleanSpecs : undefined,
       notes: notes.trim(),
       photo: existing?.photo ?? null,
@@ -157,6 +165,22 @@ export default function ItemForm() {
             onChange={(e) => setTags(e.target.value)}
             placeholder={t('form.tagsPlaceholder')}
           />
+        </label>
+
+        <label>
+          {t('item.needs')} <span className="hint">{t('form.needsHint')}</span>
+          <input
+            value={needs}
+            onChange={(e) => setNeeds(e.target.value)}
+            placeholder={t('form.needsPlaceholder')}
+          />
+        </label>
+
+        <label className="check-row">
+          <input type="checkbox" checked={worn} onChange={(e) => setWorn(e.target.checked)} />
+          <span>
+            {t('form.worn')} <span className="hint">{t('form.wornHint')}</span>
+          </span>
         </label>
 
         <fieldset className="specs-editor">

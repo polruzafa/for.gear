@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useI18n } from '../i18n'
+import { parseItemsJson, type ImportIssue } from '../itemsImport'
 import { prunePhotos } from '../photos'
 import { formatWeight, parseGearData, seedData, useStore } from '../store'
 
@@ -7,6 +8,43 @@ export default function DataPage() {
   const { data, dispatch } = useStore()
   const { t } = useI18n()
   const fileInput = useRef<HTMLInputElement>(null)
+  const [pasteText, setPasteText] = useState('')
+  const [addedCount, setAddedCount] = useState<number | null>(null)
+
+  const pasteResult = useMemo(
+    () => (pasteText.trim() ? parseItemsJson(pasteText, data) : null),
+    [pasteText, data],
+  )
+  const canAdd =
+    pasteResult != null && pasteResult.issues.length === 0 && pasteResult.items.length > 0
+
+  function issueText(issue: ImportIssue): string {
+    switch (issue.code) {
+      case 'parse':
+        return t('data.errParse', { detail: issue.detail })
+      case 'notList':
+        return t('data.errNotList')
+      case 'noName':
+        return t('data.errNoName', { n: issue.n })
+      case 'noCategory':
+        return t('data.errNoCategory', { n: issue.n, name: issue.name })
+      case 'badWeight':
+        return t('data.errBadWeight', { n: issue.n, name: issue.name })
+      case 'dupId':
+        return t('data.errDupId', { n: issue.n, name: issue.name })
+    }
+  }
+
+  function addPasted() {
+    if (!pasteResult || !canAdd) return
+    dispatch({
+      type: 'items/addMany',
+      items: pasteResult.items,
+      categories: pasteResult.newCategories,
+    })
+    setAddedCount(pasteResult.items.length)
+    setPasteText('')
+  }
 
   const totalWeight = data.items.reduce((sum, it) => sum + (it.weightGrams ?? 0), 0)
 
@@ -68,6 +106,41 @@ export default function DataPage() {
           <dd className="mono">{formatWeight(totalWeight)}</dd>
         </div>
       </dl>
+
+      <h2>{t('data.addTitle')}</h2>
+      <p className="hint">{t('data.addHint')}</p>
+      <textarea
+        className="paste-box mono"
+        rows={7}
+        value={pasteText}
+        onChange={(e) => {
+          setPasteText(e.target.value)
+          setAddedCount(null)
+        }}
+        placeholder='[{ "item": "…", "peso_g": 100, "categoria": "cocina", "tags": ["…"] }]'
+        spellCheck={false}
+        aria-label={t('data.addTitle')}
+      />
+      {pasteResult && pasteResult.issues.length > 0 && (
+        <ul className="paste-issues">
+          {pasteResult.issues.map((issue, i) => (
+            <li key={i}>{issueText(issue)}</li>
+          ))}
+        </ul>
+      )}
+      {canAdd && (
+        <p className="paste-ok">
+          {t('data.addValid', { items: pasteResult.items.length })}
+          {pasteResult.newCategories.length > 0 &&
+            ` ${t('data.addValidCats', { cats: pasteResult.newCategories.length })}`}
+        </p>
+      )}
+      {addedCount != null && <p className="paste-ok">{t('data.addDone', { items: addedCount })}</p>}
+      <div className="actions">
+        <button className="btn btn-primary" disabled={!canAdd} onClick={addPasted}>
+          {t('data.addButton')}
+        </button>
+      </div>
 
       <p className="hint">{t('data.storageHint')}</p>
 

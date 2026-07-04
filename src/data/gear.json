@@ -1,27 +1,87 @@
 {
   "schemaVersion": 4,
   "categories": [
-    { "id": "mochilas", "name": "Mochilas", "color": "#8a5a3b" },
-    { "id": "marcha", "name": "Marcha", "color": "#5e7d4f" },
-    { "id": "descanso", "name": "Descanso", "color": "#b5854e" },
-    { "id": "dormir", "name": "Dormir", "color": "#5c6fa8" },
-    { "id": "refugio", "name": "Refugio", "color": "#4e7d8e" },
-    { "id": "cocina", "name": "Cocina", "color": "#c99a3c" },
-    { "id": "fuego", "name": "Fuego", "color": "#b0413e" },
-    { "id": "combustible", "name": "Combustible", "color": "#7a5c8e" },
-    { "id": "herramientas", "name": "Herramientas", "color": "#55606b" },
-    { "id": "limpieza", "name": "Limpieza", "color": "#58a08a" },
-    { "id": "campamento", "name": "Campamento", "color": "#6e6a5e" },
-    { "id": "iluminacion", "name": "Iluminación", "color": "#c9b23a" },
-    { "id": "ropa", "name": "Ropa", "color": "#a86378" },
-    { "id": "electronica", "name": "Electrónica", "color": "#54708c" }
+    {
+      "id": "mochilas",
+      "name": "Mochilas",
+      "color": "#8a5a3b"
+    },
+    {
+      "id": "marcha",
+      "name": "Marcha",
+      "color": "#5e7d4f"
+    },
+    {
+      "id": "descanso",
+      "name": "Descanso",
+      "color": "#b5854e"
+    },
+    {
+      "id": "dormir",
+      "name": "Dormir",
+      "color": "#5c6fa8"
+    },
+    {
+      "id": "refugio",
+      "name": "Refugio",
+      "color": "#4e7d8e"
+    },
+    {
+      "id": "cocina",
+      "name": "Cocina",
+      "color": "#c99a3c"
+    },
+    {
+      "id": "fuego",
+      "name": "Fuego",
+      "color": "#b0413e"
+    },
+    {
+      "id": "combustible",
+      "name": "Combustible",
+      "color": "#7a5c8e"
+    },
+    {
+      "id": "herramientas",
+      "name": "Herramientas",
+      "color": "#55606b"
+    },
+    {
+      "id": "limpieza",
+      "name": "Limpieza",
+      "color": "#58a08a"
+    },
+    {
+      "id": "campamento",
+      "name": "Campamento",
+      "color": "#6e6a5e"
+    },
+    {
+      "id": "iluminacion",
+      "name": "Iluminación",
+      "color": "#c9b23a"
+    },
+    {
+      "id": "ropa",
+      "name": "Ropa",
+      "color": "#a86378"
+    },
+    {
+      "id": "electronica",
+      "name": "Electrónica",
+      "color": "#54708c"
+    }
   ],
   "items": [
     {
       "id": "wwago-sit-pad",
       "name": "aislante culo WWAGO",
       "categoryId": "descanso",
-      "tags": ["sit-pad", "ultralight", "campamento"],
+      "tags": [
+        "sit-pad",
+        "ultralight",
+        "campamento"
+      ],
       "weightGrams": 25,
       "notes": "Muy recomendable. Se usa constantemente durante la ruta.",
       "photo": null,
@@ -31,17 +91,24 @@
       "id": "arpenaz-200-pole",
       "name": "palo trekking ARPENAZ 200",
       "categoryId": "marcha",
-      "tags": ["trekking", "baston"],
+      "tags": [
+        "trekking",
+        "baston"
+      ],
       "weightGrams": 235,
       "notes": "Pendiente confirmar si el peso es por unidad o por pareja.",
       "photo": null,
-      "placement": "en la mano"
+      "placement": "en la mano",
+      "worn": true
     },
     {
       "id": "forclaz-mt500-air",
       "name": "trekking pad FORCLAZ mt 500 air",
       "categoryId": "dormir",
-      "tags": ["colchoneta", "inflable"],
+      "tags": [
+        "colchoneta",
+        "inflable"
+      ],
       "weightGrams": 620,
       "notes": "Peso incluyendo funda.",
       "photo": null,
@@ -51,7 +118,10 @@
       "id": "quechua-bivy-old",
       "name": "funda vivac QUECHUA (vieja)",
       "categoryId": "refugio",
-      "tags": ["vivac", "verano"],
+      "tags": [
+        "vivac",
+        "verano"
+      ],
       "weightGrams": 420,
       "notes": "Alternativa ligera a la funda Gore-Tex.",
       "photo": null,
@@ -61,7 +131,11 @@
       "id": "et-goretex-bivy",
       "name": "funda vivac goretex ET (ejercito tierra)",
       "categoryId": "refugio",
-      "tags": ["vivac", "goretex", "militar"],
+      "tags": [
+        "vivac",
+        "goretex",
+        "militar"
+      ],
       "weightGrams": 600,
       "notes": "Más pesada pero mucho más protectora.",
       "photo": null,
@@ -71,7 +145,10 @@
       "id": "forclaz-foam-pad",
       "name": "esterilla de suelo para dormir FORCLAZ",
       "categoryId": "dormir",
-      "tags": ["foam", "ccf"],
+      "tags": [
+        "foam",
+        "ccf"
+      ],
       "weightGrams": 400,
       "notes": "También aporta estructura a la mochila frameless.",
       "photo": null,
@@ -81,7 +158,9 @@
       "id": "forclaz-trek-pillow",
       "name": "FORCLAZ trek pillow",
       "categoryId": "dormir",
-      "tags": ["almohada"],
+      "tags": [
+        "almohada"
+      ],
       "weightGrams": 170,
       "notes": "Solo para campamento.",
       "photo": null,
@@ -91,27 +170,42 @@
       "id": "hengduan-usb-pump",
       "name": "hinchador electrico usb HENGDUAN",
       "categoryId": "dormir",
-      "tags": ["inflador", "usb"],
+      "tags": [
+        "inflador",
+        "usb"
+      ],
       "weightGrams": 80,
       "notes": "Solo para colchonetas inflables.",
       "photo": null,
-      "placement": "bolsa dormir"
+      "placement": "bolsa dormir",
+      "needs": [
+        "bateria"
+      ]
     },
     {
       "id": "et-goretex-tarp",
       "name": "tarp goretex ET con paracord ya preparado",
       "categoryId": "refugio",
-      "tags": ["tarp", "goretex", "militar"],
+      "tags": [
+        "tarp",
+        "goretex",
+        "militar"
+      ],
       "weightGrams": 715,
       "notes": "Cordino ya preparado.",
       "photo": null,
-      "placement": "parte superior"
+      "placement": "parte superior",
+      "needs": [
+        "piquetas"
+      ]
     },
     {
       "id": "ul-pegs-10",
       "name": "10 piquetas UL",
       "categoryId": "refugio",
-      "tags": ["piquetas"],
+      "tags": [
+        "piquetas"
+      ],
       "weightGrams": 140,
       "notes": "10 unidades.",
       "photo": null,
@@ -121,7 +215,10 @@
       "id": "onewind-quilt",
       "name": "ONEWIND quilt para dormir",
       "categoryId": "dormir",
-      "tags": ["quilt", "aislamiento"],
+      "tags": [
+        "quilt",
+        "aislamiento"
+      ],
       "weightGrams": 1111,
       "notes": "Elemento principal del sistema de dormir.",
       "photo": null,
@@ -131,16 +228,26 @@
       "id": "lixada-slow-alcohol-stove",
       "name": "hornillo de alcohol LIXADA slow",
       "categoryId": "cocina",
-      "tags": ["hornillo", "alcohol"],
+      "tags": [
+        "hornillo",
+        "alcohol"
+      ],
       "weightGrams": 15,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "needs": [
+        "fuel",
+        "mechero"
+      ]
     },
     {
       "id": "lixada-2in1-windscreen",
       "name": "cortavientos stand 2en1 LIXADA",
       "categoryId": "cocina",
-      "tags": ["windshield", "alcohol"],
+      "tags": [
+        "windshield",
+        "alcohol"
+      ],
       "weightGrams": 14,
       "notes": "",
       "photo": null
@@ -149,17 +256,28 @@
       "id": "titanium-66mm-windscreen",
       "name": "cortavientos stand 2en1 titanio 66mm",
       "categoryId": "cocina",
-      "tags": ["windshield", "titanio"],
+      "tags": [
+        "windshield",
+        "titanio"
+      ],
       "weightGrams": 18,
       "notes": "",
       "photo": null,
-      "specs": [{ "label": "Diámetro", "value": "66 mm" }]
+      "specs": [
+        {
+          "label": "Diámetro",
+          "value": "66 mm"
+        }
+      ]
     },
     {
       "id": "bic-mini",
       "name": "mechero BIC mini",
       "categoryId": "fuego",
-      "tags": ["mechero", "bic"],
+      "tags": [
+        "mechero",
+        "bic"
+      ],
       "weightGrams": 11,
       "notes": "",
       "photo": null
@@ -168,7 +286,10 @@
       "id": "clipper-mini",
       "name": "mechero CLIPPER mini",
       "categoryId": "fuego",
-      "tags": ["mechero", "clipper"],
+      "tags": [
+        "mechero",
+        "clipper"
+      ],
       "weightGrams": 10,
       "notes": "",
       "photo": null
@@ -177,7 +298,10 @@
       "id": "clipper-normal",
       "name": "mechero CLIPPER normal",
       "categoryId": "fuego",
-      "tags": ["mechero", "clipper"],
+      "tags": [
+        "mechero",
+        "clipper"
+      ],
       "weightGrams": 13,
       "notes": "",
       "photo": null
@@ -186,7 +310,10 @@
       "id": "firemaple-petrel-g3",
       "name": "olla FIREMAPLE Petrel G3 (sin funda)",
       "categoryId": "cocina",
-      "tags": ["olla", "gas"],
+      "tags": [
+        "olla",
+        "gas"
+      ],
       "weightGrams": 168,
       "notes": "",
       "photo": null,
@@ -196,28 +323,49 @@
       "id": "toaks-500-pot",
       "name": "olla TOAKS titanium 500 (sin funda)",
       "categoryId": "cocina",
-      "tags": ["olla", "titanio", "ultralight"],
+      "tags": [
+        "olla",
+        "titanio",
+        "ultralight"
+      ],
       "weightGrams": 99,
       "notes": "",
       "photo": null,
       "caseWeightGrams": 13,
-      "specs": [{ "label": "Capacidad", "value": "500 ml" }]
+      "specs": [
+        {
+          "label": "Capacidad",
+          "value": "500 ml"
+        }
+      ]
     },
     {
       "id": "lixada-300-pot",
       "name": "olla LIXADA titanium 300ml",
       "categoryId": "cocina",
-      "tags": ["olla", "titanio", "ultralight"],
+      "tags": [
+        "olla",
+        "titanio",
+        "ultralight"
+      ],
       "weightGrams": 86,
       "notes": "",
       "photo": null,
-      "specs": [{ "label": "Capacidad", "value": "300 ml" }]
+      "specs": [
+        {
+          "label": "Capacidad",
+          "value": "300 ml"
+        }
+      ]
     },
     {
       "id": "optimus-long-spoon",
       "name": "cuchara larga titanium OPTIMUS",
       "categoryId": "cocina",
-      "tags": ["cuchara", "titanio"],
+      "tags": [
+        "cuchara",
+        "titanio"
+      ],
       "weightGrams": 19,
       "notes": "Ideal para bolsas de comida liofilizada.",
       "photo": null
@@ -226,7 +374,10 @@
       "id": "outlery-titanium-set",
       "name": "set de cuberteria OUTLERY titanium (con caja)",
       "categoryId": "cocina",
-      "tags": ["cuberteria", "titanio"],
+      "tags": [
+        "cuberteria",
+        "titanio"
+      ],
       "weightGrams": 154,
       "notes": "",
       "photo": null
@@ -235,7 +386,10 @@
       "id": "diy-tripod-new",
       "name": "tripode casero (nuevo) para olla",
       "categoryId": "cocina",
-      "tags": ["DIY", "soporte"],
+      "tags": [
+        "DIY",
+        "soporte"
+      ],
       "weightGrams": 19,
       "notes": "",
       "photo": null
@@ -244,7 +398,10 @@
       "id": "diy-bipod-old",
       "name": "bipode casero (viejo) para olla",
       "categoryId": "cocina",
-      "tags": ["DIY", "soporte"],
+      "tags": [
+        "DIY",
+        "soporte"
+      ],
       "weightGrams": 19,
       "notes": "",
       "photo": null
@@ -253,7 +410,10 @@
       "id": "portugal-knife-fork",
       "name": "2en1 navaja y tenedor PORTUGAL",
       "categoryId": "herramientas",
-      "tags": ["navaja", "tenedor"],
+      "tags": [
+        "navaja",
+        "tenedor"
+      ],
       "weightGrams": 24,
       "notes": "",
       "photo": null
@@ -262,7 +422,10 @@
       "id": "opinel-no8",
       "name": "navaja OPINEL n8",
       "categoryId": "herramientas",
-      "tags": ["opinel", "navaja"],
+      "tags": [
+        "opinel",
+        "navaja"
+      ],
       "weightGrams": 43,
       "notes": "",
       "photo": null
@@ -271,17 +434,27 @@
       "id": "campeak-fuel-bottle-500",
       "name": "botella multifuel CAMPEAK 0,5L",
       "categoryId": "combustible",
-      "tags": ["fuel", "alcohol"],
+      "tags": [
+        "fuel",
+        "alcohol"
+      ],
       "weightGrams": 97,
       "notes": "",
       "photo": null,
-      "specs": [{ "label": "Capacidad", "value": "0,5 L" }]
+      "specs": [
+        {
+          "label": "Capacidad",
+          "value": "0,5 L"
+        }
+      ]
     },
     {
       "id": "mess-tin-kit",
       "name": "mess tin SIN MARCA",
       "categoryId": "cocina",
-      "tags": ["mess-tin"],
+      "tags": [
+        "mess-tin"
+      ],
       "weightGrams": 177,
       "notes": "",
       "photo": null
@@ -290,7 +463,9 @@
       "id": "bamboo-cutting-board",
       "name": "tabla de corte bambú SIN MARCA",
       "categoryId": "cocina",
-      "tags": ["tabla"],
+      "tags": [
+        "tabla"
+      ],
       "weightGrams": 98,
       "notes": "",
       "photo": null
@@ -299,7 +474,9 @@
       "id": "steamer-rack",
       "name": "rejilla vaporera SIN MARCA",
       "categoryId": "cocina",
-      "tags": ["vaporera"],
+      "tags": [
+        "vaporera"
+      ],
       "weightGrams": 47,
       "notes": "",
       "photo": null
@@ -308,26 +485,44 @@
       "id": "brs-3000t",
       "name": "hornillo de gas BRS 3000t titanio (con funda)",
       "categoryId": "cocina",
-      "tags": ["hornillo", "gas", "ultralight"],
+      "tags": [
+        "hornillo",
+        "gas",
+        "ultralight"
+      ],
       "weightGrams": 28,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "needs": [
+        "cartucho",
+        "mechero"
+      ]
     },
     {
       "id": "decathlon-steel-cup-250",
       "name": "taza de acero DECATHLON 0.25L",
       "categoryId": "cocina",
-      "tags": ["taza"],
+      "tags": [
+        "taza"
+      ],
       "weightGrams": 71,
       "notes": "",
       "photo": null,
-      "specs": [{ "label": "Capacidad", "value": "250 ml" }]
+      "specs": [
+        {
+          "label": "Capacidad",
+          "value": "250 ml"
+        }
+      ]
     },
     {
       "id": "folding-titanium-spork",
       "name": "spork plegable titanio (con funda)",
       "categoryId": "cocina",
-      "tags": ["spork", "titanio"],
+      "tags": [
+        "spork",
+        "titanio"
+      ],
       "weightGrams": 21,
       "notes": "",
       "photo": null
@@ -336,7 +531,10 @@
       "id": "tito-short-spork",
       "name": "sport corto TITO titanium (con funda)",
       "categoryId": "cocina",
-      "tags": ["spork", "titanio"],
+      "tags": [
+        "spork",
+        "titanio"
+      ],
       "weightGrams": 17,
       "notes": "",
       "photo": null
@@ -345,7 +543,10 @@
       "id": "diy-tall-windscreen",
       "name": "cortavientos casero alto",
       "categoryId": "cocina",
-      "tags": ["DIY", "windshield"],
+      "tags": [
+        "DIY",
+        "windshield"
+      ],
       "weightGrams": 12,
       "notes": "",
       "photo": null
@@ -354,7 +555,10 @@
       "id": "diy-short-windscreen",
       "name": "cortavientos casero corto",
       "categoryId": "cocina",
-      "tags": ["DIY", "windshield"],
+      "tags": [
+        "DIY",
+        "windshield"
+      ],
       "weightGrams": 8,
       "notes": "",
       "photo": null
@@ -363,7 +567,9 @@
       "id": "cut-sponge",
       "name": "estropajo cortado",
       "categoryId": "limpieza",
-      "tags": ["cocina"],
+      "tags": [
+        "cocina"
+      ],
       "weightGrams": 3,
       "notes": "",
       "photo": null
@@ -372,7 +578,9 @@
       "id": "microfiber-cloth",
       "name": "paño microfibra",
       "categoryId": "limpieza",
-      "tags": ["microfibra"],
+      "tags": [
+        "microfibra"
+      ],
       "weightGrams": 20,
       "notes": "",
       "photo": null
@@ -381,7 +589,9 @@
       "id": "ise-mount-fuel-bottle",
       "name": "botella ISE MOUNT outdoor para fuel",
       "categoryId": "combustible",
-      "tags": ["fuel"],
+      "tags": [
+        "fuel"
+      ],
       "weightGrams": 30,
       "notes": "",
       "photo": null
@@ -390,34 +600,60 @@
       "id": "tektoba-chs",
       "name": "hornillo de alcohol TEKTOBA CHS",
       "categoryId": "cocina",
-      "tags": ["hornillo", "alcohol", "ultralight"],
+      "tags": [
+        "hornillo",
+        "alcohol",
+        "ultralight"
+      ],
       "weightGrams": 8,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "needs": [
+        "fuel",
+        "mechero"
+      ]
     },
     {
       "id": "efrevo-mini",
       "name": "hornillo de alcohol eFREVO mini",
       "categoryId": "cocina",
-      "tags": ["hornillo", "alcohol", "ultralight"],
+      "tags": [
+        "hornillo",
+        "alcohol",
+        "ultralight"
+      ],
       "weightGrams": 6,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "needs": [
+        "fuel",
+        "mechero"
+      ]
     },
     {
       "id": "efrevo-max",
       "name": "hornillo de alcohol eFREVO max",
       "categoryId": "cocina",
-      "tags": ["hornillo", "alcohol", "ultralight"],
+      "tags": [
+        "hornillo",
+        "alcohol",
+        "ultralight"
+      ],
       "weightGrams": 7,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "needs": [
+        "fuel",
+        "mechero"
+      ]
     },
     {
       "id": "quechua-large-steel-plate",
       "name": "plato de acero QUECHUA grande",
       "categoryId": "cocina",
-      "tags": ["camping"],
+      "tags": [
+        "camping"
+      ],
       "weightGrams": 230,
       "notes": "Más apropiado para camping que para trekking.",
       "photo": null
@@ -426,7 +662,10 @@
       "id": "diy-folding-table",
       "name": "mini mesita plegable DIY",
       "categoryId": "campamento",
-      "tags": ["DIY", "camping"],
+      "tags": [
+        "DIY",
+        "camping"
+      ],
       "weightGrams": 406,
       "notes": "Muy interesante para bushcraft o camping base.",
       "photo": null
@@ -435,7 +674,10 @@
       "id": "opinel-sheath",
       "name": "funda opinel",
       "categoryId": "herramientas",
-      "tags": ["opinel", "funda"],
+      "tags": [
+        "opinel",
+        "funda"
+      ],
       "weightGrams": 30,
       "notes": "",
       "photo": null
@@ -444,7 +686,11 @@
       "id": "bahco-belt-knife",
       "name": "cuchillo BAHCO con funda para cinturón",
       "categoryId": "herramientas",
-      "tags": ["bahco", "cuchillo", "bushcraft"],
+      "tags": [
+        "bahco",
+        "cuchillo",
+        "bushcraft"
+      ],
       "weightGrams": 115,
       "notes": "Muy útil para bushcraft y trabajos de campamento.",
       "photo": null
@@ -453,7 +699,10 @@
       "id": "titanium-pot-handle",
       "name": "asa de titanio para ollas",
       "categoryId": "cocina",
-      "tags": ["asa", "titanio"],
+      "tags": [
+        "asa",
+        "titanio"
+      ],
       "weightGrams": 46,
       "notes": "",
       "photo": null
@@ -462,18 +711,29 @@
       "id": "3f-ul-qidian-40-16",
       "name": "mochila 3F UL Qidian 40+16",
       "categoryId": "mochilas",
-      "tags": ["mochila", "ultralight"],
+      "tags": [
+        "mochila",
+        "ultralight"
+      ],
       "weightGrams": 850,
       "notes": "",
       "photo": null,
       "maxLoadGrams": 12000,
-      "specs": [{ "label": "Volumen", "value": "40L+16L" }]
+      "specs": [
+        {
+          "label": "Volumen",
+          "value": "40L+16L"
+        }
+      ]
     },
     {
       "id": "decathlon-steel-pegs-5",
       "name": "5 piquetas acero DECATHLON",
       "categoryId": "refugio",
-      "tags": ["piquetas", "acero"],
+      "tags": [
+        "piquetas",
+        "acero"
+      ],
       "weightGrams": 156,
       "notes": "5 unidades.",
       "photo": null
@@ -482,7 +742,9 @@
       "id": "ss-di-flashlight",
       "name": "linterna SS-DI",
       "categoryId": "iluminacion",
-      "tags": ["linterna"],
+      "tags": [
+        "linterna"
+      ],
       "weightGrams": 21,
       "notes": "",
       "photo": null
@@ -491,7 +753,9 @@
       "id": "decathlon-onnight-headlamp",
       "name": "frontal DECATHLON ONNIGHT",
       "categoryId": "iluminacion",
-      "tags": ["frontal"],
+      "tags": [
+        "frontal"
+      ],
       "weightGrams": 81,
       "notes": "",
       "photo": null
@@ -500,25 +764,38 @@
       "id": "forclaz-hike-500-cap",
       "name": "gorra senderismo FORCLAZ HIKE 500",
       "categoryId": "ropa",
-      "tags": ["gorra"],
+      "tags": [
+        "gorra"
+      ],
       "weightGrams": 44,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "worn": true
     },
     {
       "id": "3f-ul-lanshan-1",
       "name": "tienda de campaña 3F UL Lanshan 1",
       "categoryId": "refugio",
-      "tags": ["tienda", "ultralight"],
+      "tags": [
+        "tienda",
+        "ultralight"
+      ],
       "weightGrams": 827,
       "notes": "",
-      "photo": null
+      "photo": null,
+      "needs": [
+        "piquetas",
+        "baston"
+      ]
     },
     {
       "id": "ul-alu-pegs-8",
       "name": "8 piquetas UL aluminio",
       "categoryId": "refugio",
-      "tags": ["piquetas", "aluminio"],
+      "tags": [
+        "piquetas",
+        "aluminio"
+      ],
       "weightGrams": 107,
       "notes": "8 unidades.",
       "photo": null
@@ -527,7 +804,10 @@
       "id": "tent-extra-footprint",
       "name": "suelo extra para tienda",
       "categoryId": "refugio",
-      "tags": ["tienda", "footprint"],
+      "tags": [
+        "tienda",
+        "footprint"
+      ],
       "weightGrams": 59,
       "notes": "",
       "photo": null
@@ -536,20 +816,31 @@
       "id": "powerbank-10000",
       "name": "batería 10000mAh 22.5W",
       "categoryId": "electronica",
-      "tags": ["bateria", "usb"],
+      "tags": [
+        "bateria",
+        "usb"
+      ],
       "weightGrams": 209,
       "notes": "",
       "photo": null,
       "specs": [
-        { "label": "Capacidad", "value": "10000 mAh" },
-        { "label": "Potencia", "value": "22,5 W" }
+        {
+          "label": "Capacidad",
+          "value": "10000 mAh"
+        },
+        {
+          "label": "Potencia",
+          "value": "22,5 W"
+        }
       ]
     },
     {
       "id": "wired-earphones",
       "name": "auriculares con cable (con funda)",
       "categoryId": "electronica",
-      "tags": ["auriculares"],
+      "tags": [
+        "auriculares"
+      ],
       "weightGrams": 18,
       "notes": "",
       "photo": null
@@ -558,7 +849,9 @@
       "id": "chinese-multitool",
       "name": "multitool chinesca con funda",
       "categoryId": "herramientas",
-      "tags": ["multitool"],
+      "tags": [
+        "multitool"
+      ],
       "weightGrams": 91,
       "notes": "",
       "photo": null
@@ -567,26 +860,199 @@
       "id": "widesea-french-press-pot",
       "name": "olla WIDESEA con cafetera de prensa francesa",
       "categoryId": "cocina",
-      "tags": ["olla", "cafetera"],
+      "tags": [
+        "olla",
+        "cafetera"
+      ],
       "weightGrams": 225,
       "notes": "",
       "photo": null,
-      "specs": [{ "label": "Capacidad", "value": "600 ml" }]
+      "specs": [
+        {
+          "label": "Capacidad",
+          "value": "600 ml"
+        }
+      ]
+    },
+    {
+      "id": "d8a5868e-8817-46c8-bbfc-342d217bc4b2",
+      "name": "cable USB-C 30cm",
+      "categoryId": "electronica",
+      "tags": [],
+      "weightGrams": 12,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "56537b16-2e28-4023-93f4-382940686f9f",
+      "name": "cable USB-C 1m",
+      "categoryId": "electronica",
+      "tags": [],
+      "weightGrams": 17,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "5fb7ef7a-8ec5-4a3e-ab0d-d3d4daaea130",
+      "name": "sandalias FORCLAZ Barefoot MT500",
+      "categoryId": "ropa",
+      "tags": [],
+      "weightGrams": 300,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "6ba6f01f-c779-48e8-b16a-9ed49d36cd36",
+      "name": "cortavientos UNIQLO",
+      "categoryId": "ropa",
+      "tags": [],
+      "weightGrams": 219,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "5c596116-b2cc-42aa-84dd-f895f1e543f6",
+      "name": "pantalon QUECHUA NH100",
+      "categoryId": "ropa",
+      "tags": [],
+      "weightGrams": 275,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "5e56c36b-8a9d-4d81-a1d9-21e19d9b294c",
+      "name": "calcetines mid HIKE 900",
+      "categoryId": "ropa",
+      "tags": [],
+      "weightGrams": 85,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "3b1db958-a662-4a9e-9794-3ece4abd1fbd",
+      "name": "Camiseta con capucha Ip50+",
+      "categoryId": "ropa",
+      "tags": [],
+      "weightGrams": 185,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "camiseta-recambio",
+      "name": "camiseta de recambio",
+      "categoryId": "ropa",
+      "tags": ["recambio"],
+      "weightGrams": 160,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "cinturon",
+      "name": "cinturon",
+      "categoryId": "ropa",
+      "tags": [],
+      "weightGrams": 110,
+      "notes": "",
+      "photo": null,
+      "worn": true
+    },
+    {
+      "id": "calzoncillos-licra",
+      "name": "calzoncillos licra DECATHLON microfibra",
+      "categoryId": "ropa",
+      "tags": ["recambio", "licra"],
+      "weightGrams": 70,
+      "notes": "Peso ESTIMADO (Decathlon no lo publica): pendiente de pesar.",
+      "photo": null
     }
   ],
   "groups": [
     {
       "id": "kit-hornillo-lixada",
-      "name": "kit hornillo LIXADA",
+      "name": "hornillo LIXADA",
       "backpackId": null,
-      "itemIds": ["lixada-slow-alcohol-stove", "lixada-2in1-windscreen"],
+      "itemIds": [
+        "lixada-slow-alcohol-stove",
+        "lixada-2in1-windscreen"
+      ],
       "groupIds": []
     },
     {
       "id": "kit-mess-tin",
-      "name": "kit mess tin",
+      "name": "Mess tin",
       "backpackId": null,
-      "itemIds": ["mess-tin-kit", "bamboo-cutting-board", "steamer-rack"],
+      "itemIds": [
+        "mess-tin-kit",
+        "bamboo-cutting-board",
+        "steamer-rack"
+      ],
+      "groupIds": []
+    },
+    {
+      "id": "d72da03e-7516-4a1f-983c-9c26ed478b7c",
+      "name": "Arroz",
+      "backpackId": null,
+      "itemIds": [
+        "mess-tin-kit",
+        "ise-mount-fuel-bottle"
+      ],
+      "groupIds": [
+        "kit-hornillo-lixada"
+      ]
+    },
+    {
+      "id": "1f0c16f9-6d52-416a-b5f4-dcafc70a1d21",
+      "name": "Dormir en verano",
+      "backpackId": null,
+      "itemIds": [
+        "onewind-quilt",
+        "forclaz-mt500-air",
+        "forclaz-foam-pad",
+        "forclaz-trek-pillow",
+        "hengduan-usb-pump"
+      ],
+      "groupIds": []
+    },
+    {
+      "id": "c7aa2daf-f5aa-46ae-a8c7-d540e5c07fbd",
+      "name": "Vivac Encamp",
+      "backpackId": "3f-ul-qidian-40-16",
+      "itemIds": [
+        "et-goretex-tarp",
+        "ul-alu-pegs-8",
+        "quechua-bivy-old"
+      ],
+      "groupIds": [
+        "1f0c16f9-6d52-416a-b5f4-dcafc70a1d21",
+        "569dd8a8-293d-490c-bfa4-0585a57ed10a",
+        "aa8047e7-b21e-442c-a88b-ce79aacb46dc"
+      ]
+    },
+    {
+      "id": "569dd8a8-293d-490c-bfa4-0585a57ed10a",
+      "name": "Cocina clásico",
+      "backpackId": null,
+      "itemIds": [
+        "toaks-500-pot",
+        "efrevo-mini",
+        "diy-short-windscreen",
+        "cut-sponge",
+        "bic-mini",
+        "diy-bipod-old",
+        "microfiber-cloth"
+      ],
+      "groupIds": []
+    },
+    {
+      "id": "aa8047e7-b21e-442c-a88b-ce79aacb46dc",
+      "name": "Electrónica básica",
+      "backpackId": null,
+      "itemIds": [
+        "powerbank-10000",
+        "56537b16-2e28-4023-93f4-382940686f9f",
+        "d8a5868e-8817-46c8-bbfc-342d217bc4b2",
+        "ss-di-flashlight"
+      ],
       "groupIds": []
     }
   ]

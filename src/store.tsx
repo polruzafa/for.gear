@@ -31,6 +31,17 @@ export type GearItem = {
   maxLoadGrams?: number
   /** Característiques lliures, només informatives («Capacidad: 750 ml», «R-value: 4,2»…). */
   specs?: { label: string; value: string }[]
+  /**
+   * Dependències per capacitat: etiquetes que algun ALTRE element del mateix
+   * grup ha de tenir («fuel», «mechero»…). Si cap element les cobreix, la
+   * motxilla o el kit mostren un avís — mai no bloquegen res.
+   */
+  needs?: string[]
+  /**
+   * Es porta a sobre (roba posada, bastons a la mà, gorra…): surt a la llista
+   * del grup però no compta en el pes transportat ni en el % de càrrega.
+   */
+  worn?: boolean
 }
 
 /**
@@ -62,6 +73,7 @@ export const seedData = seed as GearData
 
 export type Action =
   | { type: 'item/add'; item: GearItem }
+  | { type: 'items/addMany'; items: GearItem[]; categories: Category[] }
   | { type: 'item/update'; item: GearItem }
   | { type: 'item/delete'; id: string }
   | { type: 'group/add'; group: Group }
@@ -76,6 +88,12 @@ function reducer(data: GearData, action: Action): GearData {
   switch (action.type) {
     case 'item/add':
       return { ...data, items: [...data.items, action.item] }
+    case 'items/addMany':
+      return {
+        ...data,
+        categories: [...data.categories, ...action.categories],
+        items: [...data.items, ...action.items],
+      }
     case 'item/update':
       return {
         ...data,
@@ -290,10 +308,26 @@ export function collectGroupItemIds(data: GearData, group: Group): Set<string> {
   return itemIds
 }
 
-/** Pes del contingut (sense la motxilla pròpia): es compara amb la càrrega màxima. */
+/**
+ * Pes del contingut transportat (sense la motxilla pròpia ni els elements
+ * portats a sobre): es compara amb la càrrega màxima.
+ */
 export function groupContentsWeight(data: GearData, group: Group): number {
   let sum = 0
-  for (const id of collectGroupItemIds(data, group)) sum += itemOf(data, id)?.weightGrams ?? 0
+  for (const id of collectGroupItemIds(data, group)) {
+    const item = itemOf(data, id)
+    if (item && !item.worn) sum += item.weightGrams ?? 0
+  }
+  return sum
+}
+
+/** Pes dels elements del grup que es porten a sobre (no van dins la motxilla). */
+export function groupWornWeight(data: GearData, group: Group): number {
+  let sum = 0
+  for (const id of collectGroupItemIds(data, group)) {
+    const item = itemOf(data, id)
+    if (item?.worn) sum += item.weightGrams ?? 0
+  }
   return sum
 }
 
@@ -303,14 +337,14 @@ export function groupWeight(data: GearData, group: Group): number {
   return groupContentsWeight(data, group) + (backpack?.weightGrams ?? 0)
 }
 
-/** Pes per categoria del grup sencer (motxilla pròpia inclosa). */
+/** Pes transportat per categoria (motxilla pròpia inclosa; sense el que es porta a sobre). */
 export function groupWeightByCategory(data: GearData, group: Group): Map<string, number> {
   const ids = collectGroupItemIds(data, group)
   if (group.backpackId) ids.add(group.backpackId)
   const byCategory = new Map<string, number>()
   for (const id of ids) {
     const item = itemOf(data, id)
-    if (!item) continue
+    if (!item || item.worn) continue
     byCategory.set(item.categoryId, (byCategory.get(item.categoryId) ?? 0) + (item.weightGrams ?? 0))
   }
   return byCategory
@@ -321,6 +355,33 @@ export function groupLoadPercent(data: GearData, group: Group): number | null {
   const maxLoad = group.backpackId ? itemOf(data, group.backpackId)?.maxLoadGrams : undefined
   if (!maxLoad) return null
   return Math.round((groupContentsWeight(data, group) / maxLoad) * 100)
+}
+
+export type UnmetNeed = { item: GearItem; needs: string[] }
+
+/**
+ * Dependències no cobertes del grup: per a cada element amb `needs`, les
+ * etiquetes que cap ALTRE element del grup (imbricats inclosos) no aporta.
+ * La comparació no distingeix majúscules.
+ */
+export function groupUnmetNeeds(data: GearData, group: Group): UnmetNeed[] {
+  const ids = collectGroupItemIds(data, group)
+  if (group.backpackId) ids.add(group.backpackId)
+  const items = [...ids]
+    .map((id) => itemOf(data, id))
+    .filter((it): it is GearItem => Boolean(it))
+  const result: UnmetNeed[] = []
+  for (const item of items) {
+    if (!item.needs?.length) continue
+    const unmet = item.needs.filter((need) => {
+      const n = need.toLowerCase()
+      return !items.some(
+        (other) => other.id !== item.id && other.tags.some((tag) => tag.toLowerCase() === n),
+      )
+    })
+    if (unmet.length > 0) result.push({ item, needs: unmet })
+  }
+  return result
 }
 
 /** Cert si `group` conté el grup `targetId`, directament o transitivament. */

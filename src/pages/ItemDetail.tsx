@@ -149,6 +149,24 @@ export default function ItemDetail() {
             </dd>
           </div>
         )}
+        {item.worn && (
+          <div>
+            <dt>{t('item.worn')}</dt>
+            <dd>{t('form.wornHint')}</dd>
+          </div>
+        )}
+        {item.needs && item.needs.length > 0 && (
+          <div>
+            <dt>{t('item.needs')}</dt>
+            <dd>
+              {item.needs.map((need) => (
+                <span key={need} className="tag tag-needs">
+                  {need}
+                </span>
+              ))}
+            </dd>
+          </div>
+        )}
         {item.notes && (
           <div>
             <dt>{t('item.notes')}</dt>
