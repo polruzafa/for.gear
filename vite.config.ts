@@ -11,12 +11,26 @@ const commit = (() => {
   }
 })()
 
+// Versió AAAAMMDD.N: data del commit de HEAD + número de seqüència del commit
+// dins d'aquell dia (el tercer commit del 4/7/2026 → 20260704.3).
+const version = (() => {
+  try {
+    const dates = execSync('git log --format=%cd --date=format:%Y%m%d')
+      .toString()
+      .trim()
+      .split('\n')
+    return `${dates[0]}.${dates.filter((d) => d === dates[0]).length}`
+  } catch {
+    return 'dev'
+  }
+})()
+
 // base: './' perquè funcioni servida des de qualsevol subcarpeta (GitHub Pages, etc.)
 export default defineConfig({
   base: './',
   define: {
-    __BUILD_DATE__: JSON.stringify(new Date().toISOString()),
     __COMMIT__: JSON.stringify(commit),
+    __VERSION__: JSON.stringify(version),
   },
   plugins: [
     react(),

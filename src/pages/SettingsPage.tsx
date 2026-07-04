@@ -1,13 +1,7 @@
-import { getLocale, LANGS, useI18n } from '../i18n'
+import { LANGS, useI18n } from '../i18n'
 
 export default function SettingsPage() {
   const { lang, setLang, t } = useI18n()
-
-  const buildDate = new Date(__BUILD_DATE__).toLocaleDateString(getLocale(), {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
 
   return (
     <>
@@ -31,7 +25,7 @@ export default function SettingsPage() {
         <div>
           <dt>{t('settings.version')}</dt>
           <dd className="mono">
-            {buildDate} · {__COMMIT__}
+            {__VERSION__} · {__COMMIT__}
           </dd>
         </div>
       </dl>
