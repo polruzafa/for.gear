@@ -22,9 +22,8 @@ jobs:
         with:
           # Historial sencer: la versió AAAAMMDD.N compta els commits del dia
           fetch-depth: 0
+      # La versió de pnpm surt del camp packageManager del package.json
       - uses: pnpm/action-setup@v4
-        with:
-          version: 11
       - uses: actions/setup-node@v4
         with:
           node-version: 24
