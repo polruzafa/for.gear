@@ -857,6 +857,18 @@
       "photo": null
     },
     {
+      "id": "sierra-plegable-roja",
+      "name": "sierra plegable roja",
+      "categoryId": "herramientas",
+      "tags": [
+        "sierra",
+        "bushcraft"
+      ],
+      "weightGrams": 213,
+      "notes": "",
+      "photo": null
+    },
+    {
       "id": "widesea-french-press-pot",
       "name": "olla WIDESEA con cafetera de prensa francesa",
       "categoryId": "cocina",
@@ -941,7 +953,9 @@
       "id": "camiseta-recambio",
       "name": "camiseta de recambio",
       "categoryId": "ropa",
-      "tags": ["recambio"],
+      "tags": [
+        "recambio"
+      ],
       "weightGrams": 160,
       "notes": "",
       "photo": null
@@ -960,7 +974,10 @@
       "id": "calzoncillos-licra",
       "name": "calzoncillos licra DECATHLON microfibra",
       "categoryId": "ropa",
-      "tags": ["recambio", "licra"],
+      "tags": [
+        "recambio",
+        "licra"
+      ],
       "weightGrams": 70,
       "notes": "Peso ESTIMADO (Decathlon no lo publica): pendiente de pesar.",
       "photo": null

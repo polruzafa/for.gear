@@ -14,6 +14,7 @@ PWA per portar l'inventari de material de muntanya i preparar motxilles. Sense s
 
 - La llavor és a `src/data/gear.json` i s'empaqueta amb l'app.
 - El primer cop, l'app copia la llavor a `localStorage`; a partir d'aleshores totes les edicions es desen al dispositiu.
+- **Fusió automàtica de la llavor** (`src/seedMerge.ts`): l'app recorda amb quina llavor es va fusionar per última vegada (`for-gear:seed-base`). Quan un desplegament porta una llavor nova, es fusiona a l'arrencada entitat per entitat: si l'usuari no ha tocat una entitat guanya la llavor; si l'ha modificada o creada guanya l'usuari; si l'ha suprimida continua suprimida. Mai no es perd res de l'usuari.
 - Per actualitzar la llavor del repositori: *Dades → Exporta el JSON* i substituïu `src/data/gear.json` pel fitxer exportat.
 
 ### Migracions

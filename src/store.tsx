@@ -8,6 +8,7 @@ import {
 } from 'react'
 import seed from './data/gear.json'
 import { getLocale } from './i18n'
+import { EMPTY_BASE, mergeSeedData, stableStringify } from './seedMerge'
 
 export type Category = {
   id: string
@@ -68,6 +69,8 @@ export type GearData = {
 export const BACKPACK_CATEGORY = 'mochilas'
 
 const STORAGE_KEY = 'for-gear:data'
+/** La llavor amb què es va fusionar per última vegada (vegeu seedMerge.ts). */
+const SEED_BASE_KEY = 'for-gear:seed-base'
 
 export const seedData = seed as GearData
 
@@ -223,16 +226,36 @@ export function parseGearData(value: unknown): GearData | null {
   return migrated.schemaVersion === seedData.schemaVersion ? migrated : null
 }
 
+function loadSeedBase(): GearData | null {
+  try {
+    const raw = localStorage.getItem(SEED_BASE_KEY)
+    if (raw) return parseGearData(JSON.parse(raw) as unknown)
+  } catch {
+    // base corrupta: es tracta com si no n'hi hagués
+  }
+  return null
+}
+
 function load(): GearData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const parsed = parseGearData(JSON.parse(raw) as unknown)
-      if (parsed) return parsed
+      if (parsed) {
+        const base = loadSeedBase()
+        if (stableStringify(base) === stableStringify(seedData)) return parsed
+        // La llavor ha canviat des de l'última fusió: s'hi incorporen les
+        // novetats sense perdre res de l'usuari. Sense base coneguda es fa
+        // servir la base buida, que conserva tot el que té l'usuari.
+        const merged = mergeSeedData(base ?? EMPTY_BASE, parsed, seedData)
+        localStorage.setItem(SEED_BASE_KEY, JSON.stringify(seedData))
+        return merged
+      }
     }
   } catch {
     // dades corruptes: es torna a les dades d'exemple
   }
+  localStorage.setItem(SEED_BASE_KEY, JSON.stringify(seedData))
   return seedData
 }
 
