@@ -25,8 +25,6 @@ export type GearItem = {
   photo: string | null
   /** On va col·locat dins la motxilla («fondo», «bolsillo exterior»…). */
   placement?: string
-  /** Número del kit al qual pertany (elements que van junts). */
-  kit?: number
   /** Pes de la funda quan es pesa a part, en grams. */
   caseWeightGrams?: number
   /** Càrrega màxima recomanada (per a motxilles), en grams. */
@@ -35,18 +33,25 @@ export type GearItem = {
   specs?: { label: string; value: string }[]
 }
 
-export type Pack = {
+/**
+ * Un grup és una llista de material amb nom: si té `backpackId` és una
+ * motxilla preparada; si no, és un kit reutilitzable. Els grups poden
+ * contenir altres grups (kits dins de motxilles, kits dins de kits, o una
+ * motxilla carregada dins d'una altra).
+ */
+export type Group = {
   id: string
   name: string
-  backpackId: string
+  backpackId: string | null
   itemIds: string[]
+  groupIds: string[]
 }
 
 export type GearData = {
   schemaVersion: number
   categories: Category[]
   items: GearItem[]
-  packs: Pack[]
+  groups: Group[]
 }
 
 export const BACKPACK_CATEGORY = 'mochilas'
@@ -59,9 +64,10 @@ export type Action =
   | { type: 'item/add'; item: GearItem }
   | { type: 'item/update'; item: GearItem }
   | { type: 'item/delete'; id: string }
-  | { type: 'pack/add'; pack: Pack }
-  | { type: 'pack/delete'; id: string }
-  | { type: 'pack/toggleItem'; packId: string; itemId: string }
+  | { type: 'group/add'; group: Group }
+  | { type: 'group/delete'; id: string }
+  | { type: 'group/toggleItem'; groupId: string; itemId: string }
+  | { type: 'group/toggleGroup'; groupId: string; childId: string }
   | { type: 'data/import'; data: GearData }
   | { type: 'data/reset' }
 
@@ -78,25 +84,47 @@ function reducer(data: GearData, action: Action): GearData {
       return {
         ...data,
         items: data.items.filter((it) => it.id !== action.id),
-        packs: data.packs
-          .filter((p) => p.backpackId !== action.id)
-          .map((p) => ({ ...p, itemIds: p.itemIds.filter((id) => id !== action.id) })),
+        groups: data.groups.map((g) => ({
+          ...g,
+          // Si era la motxilla d'un grup, el grup passa a ser un kit: no es perd res.
+          backpackId: g.backpackId === action.id ? null : g.backpackId,
+          itemIds: g.itemIds.filter((id) => id !== action.id),
+        })),
       }
-    case 'pack/add':
-      return { ...data, packs: [...data.packs, action.pack] }
-    case 'pack/delete':
-      return { ...data, packs: data.packs.filter((p) => p.id !== action.id) }
-    case 'pack/toggleItem':
+    case 'group/add':
+      return { ...data, groups: [...data.groups, action.group] }
+    case 'group/delete':
       return {
         ...data,
-        packs: data.packs.map((p) => {
-          if (p.id !== action.packId) return p
-          const has = p.itemIds.includes(action.itemId)
+        groups: data.groups
+          .filter((g) => g.id !== action.id)
+          .map((g) => ({ ...g, groupIds: g.groupIds.filter((id) => id !== action.id) })),
+      }
+    case 'group/toggleItem':
+      return {
+        ...data,
+        groups: data.groups.map((g) => {
+          if (g.id !== action.groupId) return g
+          const has = g.itemIds.includes(action.itemId)
           return {
-            ...p,
+            ...g,
             itemIds: has
-              ? p.itemIds.filter((id) => id !== action.itemId)
-              : [...p.itemIds, action.itemId],
+              ? g.itemIds.filter((id) => id !== action.itemId)
+              : [...g.itemIds, action.itemId],
+          }
+        }),
+      }
+    case 'group/toggleGroup':
+      return {
+        ...data,
+        groups: data.groups.map((g) => {
+          if (g.id !== action.groupId) return g
+          const has = g.groupIds.includes(action.childId)
+          return {
+            ...g,
+            groupIds: has
+              ? g.groupIds.filter((id) => id !== action.childId)
+              : [...g.groupIds, action.childId],
           }
         }),
       }
@@ -117,33 +145,71 @@ function reducer(data: GearData, action: Action): GearData {
 //     TRANSFORMI les dades de la versió anterior sense perdre res.
 //  3. Tornar a la llavor és només l'últim recurs per a dades corruptes o de
 //     versions desconegudes (més noves que l'app, per exemple).
-function migrate(data: GearData): GearData {
-  // v2 → v3: només es van afegir camps opcionals (maxLoadGrams, specs) i
-  // característiques a la llavor; les dades de l'usuari són vàlides tal qual.
+
+function looksLikeGearData(value: unknown): value is Record<string, unknown> {
+  if (typeof value !== 'object' || value === null) return false
+  const v = value as Record<string, unknown>
+  return (
+    Array.isArray(v.categories) &&
+    Array.isArray(v.items) &&
+    (Array.isArray(v.groups) || Array.isArray(v.packs))
+  )
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function migrate(raw: Record<string, unknown>): GearData {
+  let data: any = raw
+  // v2 → v3: només es van afegir camps opcionals; les dades són vàlides tal qual.
   if (data.schemaVersion === 2) data = { ...data, schemaVersion: 3 }
-  return data
+  // v3 → v4: `packs` passa a `groups` (amb groupIds) i el camp numèric
+  // `kit` dels elements es converteix en grups amb nom.
+  if (data.schemaVersion === 3) {
+    const items = data.items as (GearItem & { kit?: number })[]
+    const kitNumbers = [...new Set(items.map((it) => it.kit).filter((k): k is number => k != null))]
+    const kitGroups: Group[] = kitNumbers.map((n) => ({
+      id: `kit-${n}`,
+      name: `Kit ${n}`,
+      backpackId: null,
+      itemIds: items.filter((it) => it.kit === n).map((it) => it.id),
+      groupIds: [],
+    }))
+    const { packs, ...rest } = data
+    data = {
+      ...rest,
+      schemaVersion: 4,
+      items: items.map(({ kit, ...it }) => it),
+      groups: [
+        ...((packs ?? []) as any[]).map((p) => ({
+          ...p,
+          backpackId: p.backpackId ?? null,
+          groupIds: p.groupIds ?? [],
+        })),
+        ...kitGroups,
+      ],
+    }
+  }
+  return data as GearData
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+/** Valida i migra unes dades (de localStorage o d'un fitxer importat). */
+export function parseGearData(value: unknown): GearData | null {
+  if (!looksLikeGearData(value)) return null
+  const migrated = migrate(value)
+  return migrated.schemaVersion === seedData.schemaVersion ? migrated : null
 }
 
 function load(): GearData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
-      const parsed = JSON.parse(raw) as unknown
-      if (isGearData(parsed)) {
-        const migrated = migrate(parsed)
-        if (migrated.schemaVersion === seedData.schemaVersion) return migrated
-      }
+      const parsed = parseGearData(JSON.parse(raw) as unknown)
+      if (parsed) return parsed
     }
   } catch {
     // dades corruptes: es torna a les dades d'exemple
   }
   return seedData
-}
-
-export function isGearData(value: unknown): value is GearData {
-  if (typeof value !== 'object' || value === null) return false
-  const v = value as Record<string, unknown>
-  return Array.isArray(v.categories) && Array.isArray(v.items) && Array.isArray(v.packs)
 }
 
 const StoreContext = createContext<{ data: GearData; dispatch: Dispatch<Action> } | null>(null)
@@ -185,32 +251,86 @@ export function itemOf(data: GearData, id: string): GearItem | undefined {
   return data.items.find((it) => it.id === id)
 }
 
-export function packWeight(data: GearData, pack: Pack): number {
-  const ids = [pack.backpackId, ...pack.itemIds]
-  return ids.reduce((sum, id) => sum + (itemOf(data, id)?.weightGrams ?? 0), 0)
+export function groupOf(data: GearData, id: string): Group | undefined {
+  return data.groups.find((g) => g.id === id)
 }
 
-/** Pes del contingut (sense la motxilla): és el que es compara amb la càrrega màxima. */
-export function packContentsWeight(data: GearData, pack: Pack): number {
-  return pack.itemIds.reduce((sum, id) => sum + (itemOf(data, id)?.weightGrams ?? 0), 0)
+/** Ruta d'un grup: les motxilles i els kits tenen llistes separades. */
+export function groupPath(group: Group): string {
+  return `${group.backpackId ? '/motxilles' : '/kits'}/${group.id}`
 }
 
-/** Percentatge de càrrega sobre la màxima de la motxilla, o null si no té càrrega màxima. */
-export function packLoadPercent(data: GearData, pack: Pack): number | null {
-  const maxLoad = itemOf(data, pack.backpackId)?.maxLoadGrams
-  if (!maxLoad) return null
-  return Math.round((packContentsWeight(data, pack) / maxLoad) * 100)
+/**
+ * Ids ÚNICS de tots els elements continguts, grups imbricats inclosos (una
+ * motxilla imbricada hi aporta també la seva pròpia motxilla, perquè es
+ * carrega). No inclou la motxilla pròpia del grup arrel. Un element present
+ * per dos camins compta un sol cop, i el recorregut és a prova de cicles.
+ */
+export function collectGroupItemIds(data: GearData, group: Group): Set<string> {
+  const itemIds = new Set<string>()
+  const visited = new Set<string>()
+  const walk = (g: Group) => {
+    if (visited.has(g.id)) return
+    visited.add(g.id)
+    for (const id of g.itemIds) itemIds.add(id)
+    for (const childId of g.groupIds) {
+      const child = groupOf(data, childId)
+      if (!child) continue
+      if (child.backpackId) itemIds.add(child.backpackId)
+      walk(child)
+    }
+  }
+  walk(group)
+  return itemIds
 }
 
-/** Pes per categoria d'una motxilla preparada (inclou la motxilla mateixa). */
-export function packWeightByCategory(data: GearData, pack: Pack): Map<string, number> {
+/** Pes del contingut (sense la motxilla pròpia): es compara amb la càrrega màxima. */
+export function groupContentsWeight(data: GearData, group: Group): number {
+  let sum = 0
+  for (const id of collectGroupItemIds(data, group)) sum += itemOf(data, id)?.weightGrams ?? 0
+  return sum
+}
+
+/** Pes total del grup, amb la seva motxilla inclosa si en té. */
+export function groupWeight(data: GearData, group: Group): number {
+  const backpack = group.backpackId ? itemOf(data, group.backpackId) : undefined
+  return groupContentsWeight(data, group) + (backpack?.weightGrams ?? 0)
+}
+
+/** Pes per categoria del grup sencer (motxilla pròpia inclosa). */
+export function groupWeightByCategory(data: GearData, group: Group): Map<string, number> {
+  const ids = collectGroupItemIds(data, group)
+  if (group.backpackId) ids.add(group.backpackId)
   const byCategory = new Map<string, number>()
-  for (const id of [pack.backpackId, ...pack.itemIds]) {
+  for (const id of ids) {
     const item = itemOf(data, id)
     if (!item) continue
     byCategory.set(item.categoryId, (byCategory.get(item.categoryId) ?? 0) + (item.weightGrams ?? 0))
   }
   return byCategory
+}
+
+/** Percentatge de càrrega sobre la màxima de la motxilla, o null si no n'hi ha. */
+export function groupLoadPercent(data: GearData, group: Group): number | null {
+  const maxLoad = group.backpackId ? itemOf(data, group.backpackId)?.maxLoadGrams : undefined
+  if (!maxLoad) return null
+  return Math.round((groupContentsWeight(data, group) / maxLoad) * 100)
+}
+
+/** Cert si `group` conté el grup `targetId`, directament o transitivament. */
+export function groupContainsGroup(data: GearData, group: Group, targetId: string): boolean {
+  const visited = new Set<string>()
+  const walk = (g: Group): boolean => {
+    if (visited.has(g.id)) return false
+    visited.add(g.id)
+    for (const childId of g.groupIds) {
+      if (childId === targetId) return true
+      const child = groupOf(data, childId)
+      if (child && walk(child)) return true
+    }
+    return false
+  }
+  return walk(group)
 }
 
 /** «820 g» o «1,18 kg», segons la llengua activa. */

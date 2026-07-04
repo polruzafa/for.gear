@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useI18n } from '../i18n'
 import { prunePhotos } from '../photos'
-import { formatWeight, isGearData, seedData, useStore, type GearData } from '../store'
+import { formatWeight, parseGearData, seedData, useStore } from '../store'
 
 export default function DataPage() {
   const { data, dispatch } = useStore()
@@ -23,14 +23,13 @@ export default function DataPage() {
 
   async function importJson(file: File) {
     try {
-      const parsed: unknown = JSON.parse(await file.text())
-      if (!isGearData(parsed)) {
+      const incoming = parseGearData(JSON.parse(await file.text()) as unknown)
+      if (!incoming) {
         window.alert(t('data.importInvalid'))
         return
       }
-      const incoming = parsed as GearData
       const ok = window.confirm(
-        t('data.importConfirm', { items: incoming.items.length, packs: incoming.packs.length }),
+        t('data.importConfirm', { items: incoming.items.length, groups: incoming.groups.length }),
       )
       if (ok) {
         dispatch({ type: 'data/import', data: incoming })
@@ -57,8 +56,12 @@ export default function DataPage() {
           <dd className="mono">{data.items.length}</dd>
         </div>
         <div>
+          <dt>{t('data.kits')}</dt>
+          <dd className="mono">{data.groups.filter((g) => g.backpackId == null).length}</dd>
+        </div>
+        <div>
           <dt>{t('data.packs')}</dt>
-          <dd className="mono">{data.packs.length}</dd>
+          <dd className="mono">{data.groups.filter((g) => g.backpackId != null).length}</dd>
         </div>
         <div>
           <dt>{t('data.totalWeight')}</dt>

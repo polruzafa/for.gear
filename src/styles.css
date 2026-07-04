@@ -125,8 +125,8 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  min-width: 96px;
-  padding: 6px 10px;
+  min-width: 64px;
+  padding: 6px 8px;
   border-radius: var(--radius);
   color: var(--ink-soft);
   text-decoration: none;
@@ -340,6 +340,15 @@ h2 {
   align-self: stretch;
   border-radius: 2px;
   flex-shrink: 0;
+}
+
+/* Barra dels kits: ratlles, perquè un kit agrupa diverses categories */
+.row-bar-kit {
+  background: repeating-linear-gradient(
+    180deg,
+    var(--accent) 0 4px,
+    transparent 4px 7px
+  );
 }
 
 .row-main {

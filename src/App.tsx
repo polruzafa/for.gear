@@ -2,10 +2,11 @@ import { HashRouter, Link, Navigate, NavLink, Outlet, Route, Routes } from 'reac
 import { I18nProvider, useI18n } from './i18n'
 import { StoreProvider } from './store'
 import GearList from './pages/GearList'
+import GroupDetail from './pages/GroupDetail'
 import ItemDetail from './pages/ItemDetail'
 import ItemForm from './pages/ItemForm'
+import KitsPage from './pages/KitsPage'
 import Packs from './pages/Packs'
-import PackDetail from './pages/PackDetail'
 import DataPage from './pages/DataPage'
 import SettingsPage from './pages/SettingsPage'
 
@@ -37,6 +38,10 @@ function Layout() {
           <TabIcon kind="gear" />
           {t('tabs.gear')}
         </NavLink>
+        <NavLink to="/kits" className="tab">
+          <TabIcon kind="kit" />
+          {t('tabs.kits')}
+        </NavLink>
         <NavLink to="/motxilles" className="tab">
           <TabIcon kind="pack" />
           {t('tabs.packs')}
@@ -50,9 +55,10 @@ function Layout() {
   )
 }
 
-function TabIcon({ kind }: { kind: 'gear' | 'pack' | 'data' }) {
+function TabIcon({ kind }: { kind: 'gear' | 'kit' | 'pack' | 'data' }) {
   const paths = {
     gear: 'M4 7h16M4 12h16M4 17h10',
+    kit: 'M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9v9m0-9L4 7.5M12 12l8-4.5',
     pack: 'M8 7V5a4 4 0 0 1 8 0v2m-9 0h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Zm1 7h8',
     data: 'M12 3c4.4 0 8 1.3 8 3s-3.6 3-8 3-8-1.3-8-3 3.6-3 8-3Zm-8 3v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3',
   }
@@ -74,8 +80,10 @@ export default function App() {
               <Route path="element/nou" element={<ItemForm />} />
               <Route path="element/:id" element={<ItemDetail />} />
               <Route path="element/:id/edita" element={<ItemForm />} />
+              <Route path="kits" element={<KitsPage />} />
+              <Route path="kits/:id" element={<GroupDetail />} />
               <Route path="motxilles" element={<Packs />} />
-              <Route path="motxilles/:id" element={<PackDetail />} />
+              <Route path="motxilles/:id" element={<GroupDetail />} />
               <Route path="dades" element={<DataPage />} />
               <Route path="ajustos" element={<SettingsPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />

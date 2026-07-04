@@ -17,7 +17,6 @@ export default function ItemForm() {
   const [weight, setWeight] = useState(existing?.weightGrams?.toString() ?? '')
   const [caseWeight, setCaseWeight] = useState(existing?.caseWeightGrams?.toString() ?? '')
   const [placement, setPlacement] = useState(existing?.placement ?? '')
-  const [kit, setKit] = useState(existing?.kit?.toString() ?? '')
   const [maxLoad, setMaxLoad] = useState(
     existing?.maxLoadGrams != null ? (existing.maxLoadGrams / 1000).toString() : '',
   )
@@ -61,7 +60,6 @@ export default function ItemForm() {
       caseWeightGrams:
         caseWeight.trim() === '' ? undefined : Math.max(0, Math.round(Number(caseWeight))),
       placement: placement.trim() || undefined,
-      kit: kit.trim() === '' ? undefined : Math.max(1, Math.round(Number(kit))),
       maxLoadGrams:
         categoryId !== BACKPACK_CATEGORY || maxLoad.trim() === ''
           ? undefined
@@ -149,19 +147,6 @@ export default function ItemForm() {
             value={placement}
             onChange={(e) => setPlacement(e.target.value)}
             placeholder={t('form.placementPlaceholder')}
-          />
-        </label>
-
-        <label>
-          {t('item.kit')} <span className="hint">{t('form.kitHint')}</span>
-          <input
-            type="number"
-            inputMode="numeric"
-            min="1"
-            step="1"
-            value={kit}
-            onChange={(e) => setKit(e.target.value)}
-            placeholder="—"
           />
         </label>
 

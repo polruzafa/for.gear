@@ -4,8 +4,9 @@ PWA per portar l'inventari de material de muntanya i preparar motxilles. Sense s
 
 ## Com funciona
 
-- **Material**: llista de tot l'equip, amb cerca i filtre per categoria. Cada element té fitxa pròpia (categoria, pes, etiquetes, notes i, en el futur, foto).
-- **Motxilles**: tria una motxilla del material (categoria «Motxilles») i omple-la amb elements. Mostra el pes total i una barra de pes per categories.
+- **Material**: llista de tot l'equip, amb cerca i filtre per categoria. Cada element té fitxa pròpia (categoria, pes, etiquetes, notes, característiques i foto local).
+- **Kits**: grups de material amb nom («kit arròs», «kit mess tin»…) que es poden reutilitzar i imbricar: un kit pot contenir altres kits.
+- **Motxilles**: tria una motxilla del material (categoria «Mochilas») i omple-la amb elements i kits sencers. Mostra el pes total, el percentatge de càrrega i una barra de pes per categories. Els pesos compten cada element un sol cop encara que arribi per dos camins, i no s'hi poden crear cicles. Els elements de la categoria «Mochilas» no s'afegeixen mai com a contingut solt: una motxilla només entra en un grup com a contenidor o com a grup imbricat.
 - **Dades**: exporta o importa el JSON sencer, o torna a les dades d'exemple.
 
 ## Dades

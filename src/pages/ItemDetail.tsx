@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from '../i18n'
 import { deletePhoto, downscale, savePhoto, usePhoto } from '../photos'
-import { categoryOf, formatWeight, itemOf, useStore } from '../store'
+import { categoryOf, formatWeight, groupPath, itemOf, useStore } from '../store'
 
 export default function ItemDetail() {
   const { id } = useParams()
@@ -27,10 +27,8 @@ export default function ItemDetail() {
   }
 
   const category = categoryOf(data, item.categoryId)
-  const kitMates =
-    item.kit == null ? [] : data.items.filter((it) => it.kit === item.kit && it.id !== item.id)
-  const inPacks = data.packs.filter(
-    (p) => p.backpackId === item.id || p.itemIds.includes(item.id),
+  const inGroups = data.groups.filter(
+    (g) => g.backpackId === item.id || g.itemIds.includes(item.id),
   )
 
   function remove() {
@@ -139,22 +137,6 @@ export default function ItemDetail() {
             <dd>{item.placement}</dd>
           </div>
         )}
-        {item.kit != null && (
-          <div>
-            <dt>
-              {t('item.kit')} {item.kit}
-            </dt>
-            <dd>
-              {kitMates.length > 0
-                ? kitMates.map((mate) => (
-                    <Link key={mate.id} to={`/element/${mate.id}`} className="tag tag-link">
-                      {mate.name}
-                    </Link>
-                  ))
-                : t('item.kitAlone')}
-            </dd>
-          </div>
-        )}
         {item.tags.length > 0 && (
           <div>
             <dt>{t('item.tags')}</dt>
@@ -173,13 +155,13 @@ export default function ItemDetail() {
             <dd>{item.notes}</dd>
           </div>
         )}
-        {inPacks.length > 0 && (
+        {inGroups.length > 0 && (
           <div>
             <dt>{t('item.inPacks')}</dt>
             <dd>
-              {inPacks.map((p) => (
-                <Link key={p.id} to={`/motxilles/${p.id}`} className="tag tag-link">
-                  {p.name}
+              {inGroups.map((g) => (
+                <Link key={g.id} to={groupPath(g)} className="tag tag-link">
+                  {g.name}
                 </Link>
               ))}
             </dd>

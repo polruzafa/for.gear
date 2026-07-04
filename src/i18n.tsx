@@ -15,6 +15,7 @@ const DEFAULT_LANG: Lang = 'ca'
 const ca = {
   'nav.main': 'Navegació principal',
   'tabs.gear': 'Material',
+  'tabs.kits': 'Kits',
   'tabs.packs': 'Motxilles',
   'tabs.data': 'Dades',
 
@@ -46,14 +47,12 @@ const ca = {
   'item.weight': 'Pes',
   'item.caseWeight': 'Pes de la funda',
   'item.placement': 'Ubicació',
-  'item.kit': 'Kit',
-  'item.kitAlone': 'Cap més element en aquest kit',
   'item.maxLoad': 'Càrrega màxima',
   'item.specs': 'Característiques',
   'item.tags': 'Etiquetes',
   'item.notes': 'Notes',
   'item.inPacks': 'Es troba a',
-  'item.confirmDelete': 'Voleu suprimir «{name}»? També es traurà de totes les motxilles.',
+  'item.confirmDelete': 'Voleu suprimir «{name}»? També es traurà de totes les motxilles i kits.',
 
   'form.newTitle': 'Element nou',
   'form.editTitle': 'Edita l’element',
@@ -64,7 +63,6 @@ const ca = {
   'form.caseWeightHint': '(si es pesa a part)',
   'form.placementHint': '(on va dins la motxilla)',
   'form.placementPlaceholder': 'fons, butxaca exterior…',
-  'form.kitHint': '(número del grup d’elements que van junts)',
   'form.maxLoad': 'Càrrega màxima (kg)',
   'form.maxLoadHint': '(recomanada pel fabricant)',
   'form.specAdd': 'Afegeix una característica',
@@ -73,6 +71,14 @@ const ca = {
   'form.specRemove': 'Treu la característica',
   'form.tagsHint': '(separades per comes)',
   'form.tagsPlaceholder': 'ultralight, hivern',
+
+  'kits.new': 'Crea un kit',
+  'kits.name': 'Nom del kit',
+  'kits.namePlaceholder': 'kit arròs, kit cafè…',
+  'kits.empty': 'Encara no hi ha cap kit.',
+  'kit.delete': 'Suprimeix el kit',
+  'kit.confirmDelete': 'Voleu suprimir el kit «{name}»? El material no es perd.',
+  'kit.empty': 'El kit és buit.',
 
   'packs.new': 'Prepara’n una',
   'packs.tripName': 'Nom de la sortida',
@@ -107,6 +113,7 @@ const ca = {
   'settings.version': 'Versió',
 
   'data.items': 'Elements',
+  'data.kits': 'Kits',
   'data.packs': 'Motxilles preparades',
   'data.totalWeight': 'Pes de tot el material',
   'data.storageHint':
@@ -114,9 +121,10 @@ const ca = {
   'data.export': 'Exporta el JSON',
   'data.import': 'Importa un JSON',
   'data.reset': 'Restaura les dades d’exemple',
-  'data.importInvalid': 'El fitxer no té el format esperat (calen «categories», «items» i «packs»).',
+  'data.importInvalid':
+    'El fitxer no té el format esperat (calen «categories», «items» i «groups»).',
   'data.importConfirm':
-    'Voleu substituir les dades actuals per les del fitxer? ({items} elements, {packs} motxilles)',
+    'Voleu substituir les dades actuals per les del fitxer? ({items} elements, {groups} grups)',
   'data.importError': 'No s’ha pogut llegir el fitxer JSON.',
   'data.resetConfirm':
     'Voleu descartar totes les dades i tornar a les dades d’exemple? Aquesta acció no es pot desfer.',
@@ -127,6 +135,7 @@ export type TKey = keyof typeof ca
 const es: Record<TKey, string> = {
   'nav.main': 'Navegación principal',
   'tabs.gear': 'Material',
+  'tabs.kits': 'Kits',
   'tabs.packs': 'Mochilas',
   'tabs.data': 'Datos',
 
@@ -158,14 +167,13 @@ const es: Record<TKey, string> = {
   'item.weight': 'Peso',
   'item.caseWeight': 'Peso de la funda',
   'item.placement': 'Ubicación',
-  'item.kit': 'Kit',
-  'item.kitAlone': 'Ningún elemento más en este kit',
   'item.maxLoad': 'Carga máxima',
   'item.specs': 'Características',
   'item.tags': 'Etiquetas',
   'item.notes': 'Notas',
   'item.inPacks': 'Se encuentra en',
-  'item.confirmDelete': '¿Quieres eliminar «{name}»? También se quitará de todas las mochilas.',
+  'item.confirmDelete':
+    '¿Quieres eliminar «{name}»? También se quitará de todas las mochilas y kits.',
 
   'form.newTitle': 'Elemento nuevo',
   'form.editTitle': 'Editar el elemento',
@@ -176,7 +184,6 @@ const es: Record<TKey, string> = {
   'form.caseWeightHint': '(si se pesa aparte)',
   'form.placementHint': '(dónde va dentro de la mochila)',
   'form.placementPlaceholder': 'fondo, bolsillo exterior…',
-  'form.kitHint': '(número del grupo de elementos que van juntos)',
   'form.maxLoad': 'Carga máxima (kg)',
   'form.maxLoadHint': '(recomendada por el fabricante)',
   'form.specAdd': 'Añadir una característica',
@@ -185,6 +192,14 @@ const es: Record<TKey, string> = {
   'form.specRemove': 'Quitar la característica',
   'form.tagsHint': '(separadas por comas)',
   'form.tagsPlaceholder': 'ultralight, invierno',
+
+  'kits.new': 'Crear un kit',
+  'kits.name': 'Nombre del kit',
+  'kits.namePlaceholder': 'kit arroz, kit café…',
+  'kits.empty': 'Todavía no hay ningún kit.',
+  'kit.delete': 'Eliminar el kit',
+  'kit.confirmDelete': '¿Quieres eliminar el kit «{name}»? El material no se pierde.',
+  'kit.empty': 'El kit está vacío.',
 
   'packs.new': 'Preparar una',
   'packs.tripName': 'Nombre de la salida',
@@ -219,6 +234,7 @@ const es: Record<TKey, string> = {
   'settings.version': 'Versión',
 
   'data.items': 'Elementos',
+  'data.kits': 'Kits',
   'data.packs': 'Mochilas preparadas',
   'data.totalWeight': 'Peso de todo el material',
   'data.storageHint':
@@ -227,9 +243,9 @@ const es: Record<TKey, string> = {
   'data.import': 'Importar un JSON',
   'data.reset': 'Restaurar los datos de ejemplo',
   'data.importInvalid':
-    'El archivo no tiene el formato esperado (hacen falta «categories», «items» y «packs»).',
+    'El archivo no tiene el formato esperado (hacen falta «categories», «items» y «groups»).',
   'data.importConfirm':
-    '¿Quieres sustituir los datos actuales por los del archivo? ({items} elementos, {packs} mochilas)',
+    '¿Quieres sustituir los datos actuales por los del archivo? ({items} elementos, {groups} grupos)',
   'data.importError': 'No se ha podido leer el archivo JSON.',
   'data.resetConfirm':
     '¿Quieres descartar todos los datos y volver a los datos de ejemplo? Esta acción no se puede deshacer.',
@@ -238,6 +254,7 @@ const es: Record<TKey, string> = {
 const en: Record<TKey, string> = {
   'nav.main': 'Main navigation',
   'tabs.gear': 'Gear',
+  'tabs.kits': 'Kits',
   'tabs.packs': 'Packs',
   'tabs.data': 'Data',
 
@@ -269,14 +286,12 @@ const en: Record<TKey, string> = {
   'item.weight': 'Weight',
   'item.caseWeight': 'Case weight',
   'item.placement': 'Placement',
-  'item.kit': 'Kit',
-  'item.kitAlone': 'No other items in this kit',
   'item.maxLoad': 'Max load',
   'item.specs': 'Specs',
   'item.tags': 'Tags',
   'item.notes': 'Notes',
   'item.inPacks': 'Found in',
-  'item.confirmDelete': 'Delete “{name}”? It will also be removed from every pack.',
+  'item.confirmDelete': 'Delete “{name}”? It will also be removed from every pack and kit.',
 
   'form.newTitle': 'New item',
   'form.editTitle': 'Edit item',
@@ -287,7 +302,6 @@ const en: Record<TKey, string> = {
   'form.caseWeightHint': '(if weighed separately)',
   'form.placementHint': '(where it goes in the pack)',
   'form.placementPlaceholder': 'bottom, outer pocket…',
-  'form.kitHint': '(number of the group of items that go together)',
   'form.maxLoad': 'Max load (kg)',
   'form.maxLoadHint': '(manufacturer’s recommendation)',
   'form.specAdd': 'Add a spec',
@@ -296,6 +310,14 @@ const en: Record<TKey, string> = {
   'form.specRemove': 'Remove spec',
   'form.tagsHint': '(comma-separated)',
   'form.tagsPlaceholder': 'ultralight, winter',
+
+  'kits.new': 'Create a kit',
+  'kits.name': 'Kit name',
+  'kits.namePlaceholder': 'rice kit, coffee kit…',
+  'kits.empty': 'No kits yet.',
+  'kit.delete': 'Delete kit',
+  'kit.confirmDelete': 'Delete the kit “{name}”? Your gear is not lost.',
+  'kit.empty': 'The kit is empty.',
 
   'packs.new': 'Prepare one',
   'packs.tripName': 'Trip name',
@@ -330,6 +352,7 @@ const en: Record<TKey, string> = {
   'settings.version': 'Version',
 
   'data.items': 'Items',
+  'data.kits': 'Kits',
   'data.packs': 'Prepared packs',
   'data.totalWeight': 'Weight of all gear',
   'data.storageHint':
@@ -338,9 +361,9 @@ const en: Record<TKey, string> = {
   'data.import': 'Import JSON',
   'data.reset': 'Restore sample data',
   'data.importInvalid':
-    'The file does not have the expected format (it needs “categories”, “items” and “packs”).',
+    'The file does not have the expected format (it needs “categories”, “items” and “groups”).',
   'data.importConfirm':
-    'Replace the current data with the file’s? ({items} items, {packs} packs)',
+    'Replace the current data with the file’s? ({items} items, {groups} groups)',
   'data.importError': 'Could not read the JSON file.',
   'data.resetConfirm':
     'Discard all data and go back to the sample data? This action cannot be undone.',

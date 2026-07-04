@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "categories": [
     { "id": "mochilas", "name": "Mochilas", "color": "#8a5a3b" },
     { "id": "marcha", "name": "Marcha", "color": "#5e7d4f" },
@@ -11,7 +11,10 @@
     { "id": "combustible", "name": "Combustible", "color": "#7a5c8e" },
     { "id": "herramientas", "name": "Herramientas", "color": "#55606b" },
     { "id": "limpieza", "name": "Limpieza", "color": "#58a08a" },
-    { "id": "campamento", "name": "Campamento", "color": "#6e6a5e" }
+    { "id": "campamento", "name": "Campamento", "color": "#6e6a5e" },
+    { "id": "iluminacion", "name": "Iluminación", "color": "#c9b23a" },
+    { "id": "ropa", "name": "Ropa", "color": "#a86378" },
+    { "id": "electronica", "name": "Electrónica", "color": "#54708c" }
   ],
   "items": [
     {
@@ -130,9 +133,8 @@
       "categoryId": "cocina",
       "tags": ["hornillo", "alcohol"],
       "weightGrams": 15,
-      "notes": "Parte del kit (1).",
-      "photo": null,
-      "kit": 1
+      "notes": "",
+      "photo": null
     },
     {
       "id": "lixada-2in1-windscreen",
@@ -140,9 +142,8 @@
       "categoryId": "cocina",
       "tags": ["windshield", "alcohol"],
       "weightGrams": 14,
-      "notes": "Parte del kit (1).",
-      "photo": null,
-      "kit": 1
+      "notes": "",
+      "photo": null
     },
     {
       "id": "titanium-66mm-windscreen",
@@ -272,9 +273,8 @@
       "categoryId": "cocina",
       "tags": ["mess-tin"],
       "weightGrams": 177,
-      "notes": "Parte del kit (2).",
-      "photo": null,
-      "kit": 2
+      "notes": "",
+      "photo": null
     },
     {
       "id": "bamboo-cutting-board",
@@ -282,9 +282,8 @@
       "categoryId": "cocina",
       "tags": ["tabla"],
       "weightGrams": 98,
-      "notes": "Parte del kit (2).",
-      "photo": null,
-      "kit": 2
+      "notes": "",
+      "photo": null
     },
     {
       "id": "steamer-rack",
@@ -292,9 +291,8 @@
       "categoryId": "cocina",
       "tags": ["vaporera"],
       "weightGrams": 47,
-      "notes": "Parte del kit (2).",
-      "photo": null,
-      "kit": 2
+      "notes": "",
+      "photo": null
     },
     {
       "id": "brs-3000t",
@@ -469,7 +467,117 @@
       "weightGrams": 156,
       "notes": "5 unidades.",
       "photo": null
+    },
+    {
+      "id": "ss-di-flashlight",
+      "name": "linterna SS-DI",
+      "categoryId": "iluminacion",
+      "tags": ["linterna"],
+      "weightGrams": 21,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "decathlon-onnight-headlamp",
+      "name": "frontal DECATHLON ONNIGHT",
+      "categoryId": "iluminacion",
+      "tags": ["frontal"],
+      "weightGrams": 81,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "forclaz-hike-500-cap",
+      "name": "gorra senderismo FORCLAZ HIKE 500",
+      "categoryId": "ropa",
+      "tags": ["gorra"],
+      "weightGrams": 44,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "3f-ul-lanshan-1",
+      "name": "tienda de campaña 3F UL Lanshan 1",
+      "categoryId": "refugio",
+      "tags": ["tienda", "ultralight"],
+      "weightGrams": 827,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "ul-alu-pegs-8",
+      "name": "8 piquetas UL aluminio",
+      "categoryId": "refugio",
+      "tags": ["piquetas", "aluminio"],
+      "weightGrams": 107,
+      "notes": "8 unidades.",
+      "photo": null
+    },
+    {
+      "id": "tent-extra-footprint",
+      "name": "suelo extra para tienda",
+      "categoryId": "refugio",
+      "tags": ["tienda", "footprint"],
+      "weightGrams": 59,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "powerbank-10000",
+      "name": "batería 10000mAh 22.5W",
+      "categoryId": "electronica",
+      "tags": ["bateria", "usb"],
+      "weightGrams": 209,
+      "notes": "",
+      "photo": null,
+      "specs": [
+        { "label": "Capacidad", "value": "10000 mAh" },
+        { "label": "Potencia", "value": "22,5 W" }
+      ]
+    },
+    {
+      "id": "wired-earphones",
+      "name": "auriculares con cable (con funda)",
+      "categoryId": "electronica",
+      "tags": ["auriculares"],
+      "weightGrams": 18,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "chinese-multitool",
+      "name": "multitool chinesca con funda",
+      "categoryId": "herramientas",
+      "tags": ["multitool"],
+      "weightGrams": 91,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "widesea-french-press-pot",
+      "name": "olla WIDESEA con cafetera de prensa francesa",
+      "categoryId": "cocina",
+      "tags": ["olla", "cafetera"],
+      "weightGrams": 225,
+      "notes": "",
+      "photo": null,
+      "specs": [{ "label": "Capacidad", "value": "600 ml" }]
     }
   ],
-  "packs": []
+  "groups": [
+    {
+      "id": "kit-hornillo-lixada",
+      "name": "kit hornillo LIXADA",
+      "backpackId": null,
+      "itemIds": ["lixada-slow-alcohol-stove", "lixada-2in1-windscreen"],
+      "groupIds": []
+    },
+    {
+      "id": "kit-mess-tin",
+      "name": "kit mess tin",
+      "backpackId": null,
+      "itemIds": ["mess-tin-kit", "bamboo-cutting-board", "steamer-rack"],
+      "groupIds": []
+    }
+  ]
 }
