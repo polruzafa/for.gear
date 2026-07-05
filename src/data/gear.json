@@ -307,16 +307,19 @@
     },
     {
       "id": "firemaple-petrel-g3",
-      "name": "olla FIREMAPLE Petrel G3 (sin funda)",
+      "name": "olla FIREMAPLE Petrel G3 (con funda)",
       "categoryId": "cocina",
       "tags": [
         "olla",
         "gas"
       ],
-      "weightGrams": 168,
+      "weightGrams": 188,
+      "caseWeightGrams": 20,
+      "needs": [
+        "Fuel"
+      ],
       "notes": "",
-      "photo": null,
-      "caseWeightGrams": 20
+      "photo": null
     },
     {
       "id": "toaks-500-pot",
@@ -336,6 +339,9 @@
           "label": "Capacidad",
           "value": "500 ml"
         }
+      ],
+      "needs": [
+        "Fuel"
       ]
     },
     {
@@ -959,17 +965,8 @@
       "photo": null
     },
     {
-      "id": "cinturon",
-      "name": "cinturon",
-      "categoryId": "ropa",
-      "tags": [],
-      "weightGrams": 110,
-      "notes": "",
-      "photo": null
-    },
-    {
       "id": "calzoncillos-licra",
-      "name": "calzoncillos licra DECATHLON microfibra",
+      "name": "calzoncillos licra DECATHLON",
       "categoryId": "ropa",
       "tags": [
         "recambio",
@@ -977,6 +974,125 @@
       ],
       "weightGrams": 70,
       "notes": "Peso ESTIMADO (Decathlon no lo publica): pendiente de pesar.",
+      "photo": null
+    },
+    {
+      "id": "mechanix-original",
+      "name": "guantes MECHANIX The Original",
+      "categoryId": "ropa",
+      "tags": [
+        "guantes"
+      ],
+      "weightGrams": 71,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "buff-chinesco",
+      "name": "buff chinesco",
+      "categoryId": "ropa",
+      "tags": [
+        "buff"
+      ],
+      "weightGrams": 30,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "cinturon-tactico",
+      "name": "cinturon tactico",
+      "categoryId": "ropa",
+      "tags": [
+        "cinturon",
+        "tactico"
+      ],
+      "weightGrams": 110,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "merrell-moab-3",
+      "name": "botas MERREL Moab 3 (par)",
+      "categoryId": "ropa",
+      "tags": [
+        "botas",
+        "calzado"
+      ],
+      "weightGrams": 924,
+      "notes": "El par.",
+      "photo": null
+    },
+    {
+      "id": "funda-traje-tormenta-et",
+      "name": "funda traje tormenta ET Goretex",
+      "categoryId": "ropa",
+      "tags": [
+        "funda",
+        "goretex",
+        "militar"
+      ],
+      "weightGrams": 30,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "pantalon-tormenta-et",
+      "name": "pantalón impermeable de tormenta ET Goretex",
+      "categoryId": "ropa",
+      "tags": [
+        "impermeable",
+        "goretex",
+        "militar"
+      ],
+      "weightGrams": 400,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "chaqueta-tormenta-et",
+      "name": "chaqueta impermeable de tormenta ET Goretex",
+      "categoryId": "ropa",
+      "tags": [
+        "impermeable",
+        "goretex",
+        "militar"
+      ],
+      "weightGrams": 586,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "xiaomi-mi-9t",
+      "name": "teléfono móvil Xiaomi Mi 9T",
+      "categoryId": "electronica",
+      "tags": [
+        "telefono"
+      ],
+      "weightGrams": 220,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "19b4f729-6bc5-4f24-b373-be6c7bbaddbb",
+      "name": "Botella Alcohol DIY 150ml",
+      "categoryId": "combustible",
+      "tags": [
+        "fuel"
+      ],
+      "weightGrams": 26,
+      "notes": "",
+      "photo": null
+    },
+    {
+      "id": "07635526-af2e-4668-9e28-ccf793ca5735",
+      "name": "Botella de agua 1,5L",
+      "categoryId": "cocina",
+      "tags": [
+        "Agua",
+        "comida"
+      ],
+      "weightGrams": 1500,
+      "notes": "",
       "photo": null
     }
   ],
@@ -1069,6 +1185,38 @@
         },
         {
           "id": "quechua-bivy-old"
+        },
+        {
+          "id": "5e56c36b-8a9d-4d81-a1d9-21e19d9b294c",
+          "wornQty": 1,
+          "qty": 2
+        },
+        {
+          "id": "5c596116-b2cc-42aa-84dd-f895f1e543f6",
+          "wornQty": 1
+        },
+        {
+          "id": "forclaz-hike-500-cap",
+          "wornQty": 1
+        },
+        {
+          "id": "sierra-plegable-roja"
+        },
+        {
+          "id": "3b1db958-a662-4a9e-9794-3ece4abd1fbd",
+          "wornQty": 1
+        },
+        {
+          "id": "camiseta-recambio"
+        },
+        {
+          "id": "calzoncillos-licra",
+          "wornQty": 1,
+          "qty": 2
+        },
+        {
+          "id": "07635526-af2e-4668-9e28-ccf793ca5735",
+          "qty": 2
         }
       ]
     },
@@ -1098,6 +1246,9 @@
         },
         {
           "id": "microfiber-cloth"
+        },
+        {
+          "id": "ise-mount-fuel-bottle"
         }
       ]
     },
@@ -1118,8 +1269,47 @@
         },
         {
           "id": "ss-di-flashlight"
+        },
+        {
+          "id": "xiaomi-mi-9t",
+          "wornQty": 1
         }
       ]
+    },
+    {
+      "id": "285d53e9-edfa-45d4-9290-aebd218cc96c",
+      "name": "Cocina New",
+      "backpackId": null,
+      "members": [
+        {
+          "id": "firemaple-petrel-g3"
+        },
+        {
+          "id": "19b4f729-6bc5-4f24-b373-be6c7bbaddbb"
+        },
+        {
+          "id": "efrevo-mini"
+        },
+        {
+          "id": "folding-titanium-spork"
+        },
+        {
+          "id": "diy-bipod-old"
+        },
+        {
+          "id": "diy-tall-windscreen"
+        },
+        {
+          "id": "cut-sponge"
+        },
+        {
+          "id": "microfiber-cloth"
+        },
+        {
+          "id": "bic-mini"
+        }
+      ],
+      "groupIds": []
     }
   ]
 }
