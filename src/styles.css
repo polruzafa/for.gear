@@ -1368,33 +1368,27 @@ h2 {
 
 .review-body {
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.review-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
 }
 
-.review-thumbs {
+/* Tira de fotografies a peu de targeta: es reparteixen l'amplada a alçada fixa */
+.review-photos {
   display: flex;
-  flex-direction: column;
+  align-self: stretch;
   gap: 6px;
-  flex-shrink: 0;
 }
 
-.review-thumb {
-  width: 64px;
-  height: 64px;
+.review-photo {
+  flex: 1;
+  min-width: 0;
+  /* Fita perquè en pantalles amples no s'estirin en panoràmiques estranyes */
+  max-width: 300px;
+  height: clamp(96px, 28vw, 150px);
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--line);
-  flex-shrink: 0;
 }
 
 .review-url {

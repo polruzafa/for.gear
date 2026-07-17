@@ -91,27 +91,25 @@ function ReviewCard({ data, review }: { data: GearData; review: Review }) {
         </div>
       )}
       <div className="review-body">
-        <div className="review-main">
-          {review.notes && <p className="review-notes">{review.notes}</p>}
-          {review.extraIngredients && review.extraIngredients.length > 0 && (
-            <p className="hint review-ingredients">+ {review.extraIngredients.join(', ')}</p>
-          )}
-          {review.url && (
-            <a
-              className="tag tag-link review-url"
-              href={review.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t('review.openUrl')}
-            >
-              {urlHost(review.url)} ↗
-            </a>
-          )}
-        </div>
+        {review.notes && <p className="review-notes">{review.notes}</p>}
+        {review.extraIngredients && review.extraIngredients.length > 0 && (
+          <p className="hint review-ingredients">+ {review.extraIngredients.join(', ')}</p>
+        )}
+        {review.url && (
+          <a
+            className="tag tag-link review-url"
+            href={review.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('review.openUrl')}
+          >
+            {urlHost(review.url)} ↗
+          </a>
+        )}
         {photoUrls.length > 0 && (
-          <div className="review-thumbs">
+          <div className="review-photos">
             {photoUrls.map((url, i) => (
-              <img key={i} className="review-thumb" src={url} alt="" />
+              <img key={i} className="review-photo" src={url} alt="" loading="lazy" />
             ))}
           </div>
         )}
