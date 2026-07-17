@@ -18,6 +18,12 @@ import {
   type ReactNode,
 } from 'react'
 import { useI18n, type TKey } from './i18n'
+import {
+  hasPendingPhotoOps,
+  resetPhotoSyncState,
+  setPhotoQueueListener,
+  syncPhotos,
+} from './photoSync'
 import { parseGearData, useStore, type GearData } from './store'
 
 const ACCOUNT_KEY = 'fardell:account'
@@ -91,7 +97,7 @@ type AccountContextValue = {
   errorKey: TKey | null
   /** Retornen la clau i18n de l'error, o null si tot ha anat bé. */
   login: (serverUrl: string, email: string, password: string) => Promise<TKey | null>
-  register: (serverUrl: string, email: string, password: string) => Promise<TKey | null>
+  register: (serverUrl: string, email: string, password: string, code: string) => Promise<TKey | null>
   logout: () => void
   deleteAccount: (password: string) => Promise<TKey | null>
   syncNow: () => void
@@ -122,6 +128,22 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   const applyingRemote = useRef(false)
   const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastSyncAttempt = useRef(0)
+
+  // Fotografies: a l'arrencada (o després d'entrar) sempre toca una passada
+  // completa; després, només quan hi ha canvis locals o dades noves del servidor.
+  const photoSyncWanted = useRef(true)
+  const photoTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const schedulePhotoSync = useCallback(() => {
+    const acc = accountRef.current
+    if (!acc) return
+    if (photoTimer.current) clearTimeout(photoTimer.current)
+    photoTimer.current = setTimeout(() => {
+      photoTimer.current = null
+      const current = accountRef.current
+      if (current) void syncPhotos(current.serverUrl, current.token)
+    }, PUSH_DEBOUNCE_MS)
+  }, [])
 
   const setAccount = useCallback((acc: Account | null) => {
     accountRef.current = acc
@@ -158,6 +180,8 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'data/import', data: parsed })
       setSyncState({ lastSyncedAt: updatedAt, dirty: false })
       setErrorKey(null)
+      // Dades noves del servidor: potser hi ha fotografies noves a baixar.
+      photoSyncWanted.current = true
       setStatus('synced')
       return true
     },
@@ -261,6 +285,23 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     }
   }, [data, setSyncState, schedulePush])
 
+  // Amb les dades sincronitzades, es sincronitzen també les fotografies —
+  // però només quan pot haver-hi feina: la primera vegada, quan han arribat
+  // dades noves del servidor o quan hi ha canvis locals a la cua.
+  useEffect(() => {
+    if (status !== 'synced' || !accountRef.current) return
+    if (photoSyncWanted.current || hasPendingPhotoOps()) {
+      photoSyncWanted.current = false
+      schedulePhotoSync()
+    }
+  }, [status, schedulePhotoSync])
+
+  // Cada fotografia desada o suprimida amb la sessió oberta programa l'enviament.
+  useEffect(() => {
+    setPhotoQueueListener(() => schedulePhotoSync())
+    return () => setPhotoQueueListener(null)
+  }, [schedulePhotoSync])
+
   // En arrencar amb sessió oberta, es reconcilia; en tornar a l'app (PWA en
   // segon pla), també, però com a molt un cop per minut.
   useEffect(() => {
@@ -284,6 +325,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       serverUrl: string,
       email: string,
       password: string,
+      code?: string,
     ): Promise<TKey | null> => {
       const url = normalizeServerUrl(serverUrl)
       if (!url) return 'account.errServer'
@@ -292,13 +334,14 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       try {
         const res = await api(url, path, {
           method: 'POST',
-          body: { email: email.trim(), password },
+          body: { email: email.trim(), password, ...(code?.trim() ? { code: code.trim() } : {}) },
         })
         if (res.status === 200 || res.status === 201) {
           localStorage.setItem(SERVER_URL_KEY, url)
           setAccount({ email: res.body.email as string, token: res.body.token as string, serverUrl: url })
           // La sessió és nova: no se sap quina versió del servidor coneixíem.
           setSyncState({ lastSyncedAt: null, dirty: syncRef.current.dirty })
+          photoSyncWanted.current = true
           await reconcileRef.current()
           return null
         }
@@ -307,6 +350,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
         if (error === 'exists') return 'account.errExists'
         if (error === 'email') return 'account.errEmail'
         if (error === 'password') return 'account.errPassword'
+        if (error === 'code') return 'account.errCode'
         if (res.status === 401) return 'account.errCredentials'
         return 'account.errNetwork'
       } catch {
@@ -323,14 +367,15 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     [signIn],
   )
   const register = useCallback(
-    (serverUrl: string, email: string, password: string) =>
-      signIn('/api/register', serverUrl, email, password),
+    (serverUrl: string, email: string, password: string, code: string) =>
+      signIn('/api/register', serverUrl, email, password, code),
     [signIn],
   )
 
   const logout = useCallback(() => {
     const acc = accountRef.current
     if (pushTimer.current) clearTimeout(pushTimer.current)
+    if (photoTimer.current) clearTimeout(photoTimer.current)
     setAccount(null)
     setErrorKey(null)
     setStatus('idle')
@@ -354,6 +399,8 @@ export function AccountProvider({ children }: { children: ReactNode }) {
         if (res.status === 204) {
           setAccount(null)
           setSyncState({ lastSyncedAt: null, dirty: true })
+          // El servidor ja no té cap fotografia: es parteix de zero.
+          resetPhotoSyncState()
           setErrorKey(null)
           setStatus('idle')
           return null
@@ -367,7 +414,11 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     [setAccount, setSyncState],
   )
 
-  const syncNow = useCallback(() => void reconcileRef.current(), [])
+  const syncNow = useCallback(() => {
+    // La sincronització manual també repassa les fotografies de dalt a baix.
+    photoSyncWanted.current = true
+    void reconcileRef.current()
+  }, [])
 
   return (
     <AccountContext.Provider

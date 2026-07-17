@@ -405,6 +405,7 @@ function AccountSection() {
   const [serverUrl, setServerUrl] = useState(defaultServerUrl)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [inviteCode, setInviteCode] = useState('')
   const [formError, setFormError] = useState<TKey | null>(null)
   const [busy, setBusy] = useState(false)
 
@@ -416,7 +417,9 @@ function AccountSection() {
     }
     setBusy(true)
     setFormError(null)
-    const error = await (action === 'login' ? login : register)(serverUrl, email, password)
+    const error = await (action === 'login'
+      ? login(serverUrl, email, password)
+      : register(serverUrl, email, password, inviteCode))
     setBusy(false)
     if (error) {
       setFormError(error)
@@ -476,6 +479,16 @@ function AccountSection() {
               required
               minLength={8}
               autoComplete="current-password"
+            />
+          </label>
+          <label>
+            {t('account.inviteCode')} <span className="hint">{t('account.inviteCodeHint')}</span>
+            <input
+              value={inviteCode}
+              onChange={(e) => setInviteCode(e.target.value)}
+              autoComplete="off"
+              autoCapitalize="off"
+              spellCheck={false}
             />
           </label>
           {formError && <p className="sync-status sync-status-error">{t(formError)}</p>}

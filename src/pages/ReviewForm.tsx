@@ -26,11 +26,14 @@ import {
   type Review,
 } from '../store'
 
-/** Afegeix https:// si s'ha enganxat l'adreça sense esquema. */
+/** Afegeix https:// si s'ha enganxat l'adreça sense esquema. Només s'accepten
+ * enllaços web: qualsevol altre esquema (javascript:, data:…) es descarta. */
 function normalizeUrl(raw: string): string | undefined {
   const trimmed = raw.trim()
   if (!trimmed) return undefined
-  return /^[a-z][a-z0-9+.-]*:/i.test(trimmed) ? trimmed : `https://${trimmed}`
+  if (/^https?:/i.test(trimmed)) return trimmed
+  if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed)) return undefined
+  return `https://${trimmed}`
 }
 
 export default function ReviewForm() {

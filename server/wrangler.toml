@@ -10,5 +10,11 @@ binding = "DB"
 database_name = "fardell"
 database_id = "d242bf4c-dff7-4a88-a2ed-6eabc1132ef1"
 
+# Fotografies. Si no voleu sincronitzar-les, comenteu aquest bloc:
+# l'API respon 501 a /api/photos i l'app les deixa en local, com abans.
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "fardell-photos"
+
 [observability]
 enabled = true

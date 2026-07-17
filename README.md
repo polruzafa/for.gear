@@ -22,10 +22,10 @@ PWA per portar l'inventari de material de muntanya i preparar motxilles. Local p
 ### Compte i sincronització
 
 - **Opcional**: sense compte, l'app funciona exactament igual que abans, només amb el dispositiu.
-- Amb un compte (adreça electrònica i contrasenya, des dels *Ajustos*), les dades es guarden també al servidor i se sincronitzen entre dispositius: cada canvi s'envia al cap d'un moment, i en obrir l'app es recullen les novetats.
+- Amb un compte (adreça electrònica i contrasenya, des dels *Ajustos*), les dades es guarden també al servidor i se sincronitzen entre dispositius: cada canvi s'envia al cap d'un moment, i en obrir l'app es recullen les novetats. Crear el compte demana el **codi d'invitació** si el servidor en té un de configurat (recomanat; vegeu `server/README.md`).
 - La lògica és a `src/account.tsx`: el dispositiu recorda quina versió del servidor coneix (`lastSyncedAt`) i si té canvis pendents (`dirty`). Si hi ha canvis a totes dues bandes, l'app pregunta amb quina versió quedar-se; mai no fusiona a cegues.
-- El backend és un Worker de Cloudflare amb D1, dins de `server/`; el desplegament (gratuït) està explicat a `server/README.md`. L'URL de l'API s'escriu al formulari dels *Ajustos*, o es deixa preconfigurada compilant amb `VITE_API_URL`.
-- Les fotografies no es sincronitzen: viuen a l'IndexedDB de cada dispositiu.
+- El backend és un Worker de Cloudflare amb D1 (i un bucket R2 per a les fotografies), dins de `server/`; el desplegament (gratuït) està explicat a `server/README.md`. L'URL de l'API s'escriu al formulari dels *Ajustos*, o es deixa preconfigurada compilant amb `VITE_API_URL`.
+- Les fotografies també se sincronitzen (`src/photoSync.ts`): cada canvi local s'apunta en una cua i, amb les dades al dia, s'envien les pendents, es propaguen les supressions i es baixen les que falten. Si el servidor no té el bucket R2 configurat, queden en local com abans. No viatgen mai amb l'exportació del JSON.
 
 ### Migracions
 

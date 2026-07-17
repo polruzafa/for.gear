@@ -1,6 +1,7 @@
 // Fotografies dels elements: viuen a IndexedDB (no a localStorage, que té un
-// límit d'uns 5 MB i només accepta cadenes). Són locals al dispositiu: no
-// viatgen amb l'exportació del JSON ni es sincronitzen entre dispositius.
+// límit d'uns 5 MB i només accepta cadenes). No viatgen amb l'exportació del
+// JSON, però amb un compte es sincronitzen entre dispositius (photoSync.ts):
+// savePhoto() i deletePhoto() avisen el sincronitzador de cada canvi.
 import { useEffect, useState } from 'react'
 
 const DB_NAME = 'fardell'
@@ -49,12 +50,44 @@ export function photoKeys(id: string): string[] {
   return Array.from({ length: MAX_REVIEW_PHOTOS }, (_, i) => (i === 0 ? id : `${id}#${i + 1}`))
 }
 
-export async function savePhoto(id: string, blob: Blob): Promise<void> {
+/** Claus de totes les fotografies desades al dispositiu. */
+export async function listPhotoKeys(): Promise<string[]> {
+  const keys = await withStore('readonly', (s) => s.getAllKeys())
+  return keys.filter((k): k is string => typeof k === 'string')
+}
+
+// El sincronitzador (photoSync.ts) s'hi registra per apuntar cada canvi local.
+// És una funció solta i no un import per no crear una dependència circular.
+let changeListener: ((kind: 'save' | 'delete', key: string) => void) | null = null
+export function setPhotoChangeListener(fn: typeof changeListener): void {
+  changeListener = fn
+}
+
+// Quan la sincronització baixa o esborra fotografies, les vistes obertes
+// (usePhoto/usePhotos) es refresquen escoltant aquest esdeveniment.
+const CHANGED_EVENT = 'fardell:photos-changed'
+export function firePhotosChanged(): void {
+  window.dispatchEvent(new Event(CHANGED_EVENT))
+}
+
+/** Desa sense avisar el sincronitzador (la fa servir ell mateix, en baixar). */
+export async function putPhotoLocal(id: string, blob: Blob): Promise<void> {
   await withStore('readwrite', (s) => s.put(blob, id))
 }
 
-export async function deletePhoto(id: string): Promise<void> {
+/** Esborra sense avisar el sincronitzador (la fa servir ell mateix). */
+export async function removePhotoLocal(id: string): Promise<void> {
   await withStore('readwrite', (s) => s.delete(id))
+}
+
+export async function savePhoto(id: string, blob: Blob): Promise<void> {
+  await putPhotoLocal(id, blob)
+  changeListener?.('save', id)
+}
+
+export async function deletePhoto(id: string): Promise<void> {
+  await removePhotoLocal(id)
+  changeListener?.('delete', id)
 }
 
 /** Esborra les fotografies d'elements que ja no existeixen (després d'importar
@@ -101,6 +134,13 @@ export function usePhoto(id: string | undefined) {
   const [url, setUrl] = useState<string | null>(null)
   const [version, setVersion] = useState(0)
 
+  // La sincronització pot baixar o esborrar fotografies: es torna a llegir.
+  useEffect(() => {
+    const onChanged = () => setVersion((v) => v + 1)
+    window.addEventListener(CHANGED_EVENT, onChanged)
+    return () => window.removeEventListener(CHANGED_EVENT, onChanged)
+  }, [])
+
   useEffect(() => {
     if (!id) return
     let objectUrl: string | null = null
@@ -127,7 +167,14 @@ export function usePhoto(id: string | undefined) {
  * sense id (ressenya nova, encara sense desar) retorna null directament. */
 export function usePhotos(ids: (string | undefined)[]): (string | null)[] {
   const [urls, setUrls] = useState<(string | null)[]>(() => ids.map(() => null))
+  const [version, setVersion] = useState(0)
   const key = ids.join('|')
+
+  useEffect(() => {
+    const onChanged = () => setVersion((v) => v + 1)
+    window.addEventListener(CHANGED_EVENT, onChanged)
+    return () => window.removeEventListener(CHANGED_EVENT, onChanged)
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -145,7 +192,7 @@ export function usePhotos(ids: (string | undefined)[]): (string | null)[] {
     }
     // Les claus canvien totes juntes: n'hi ha prou amb la cadena concatenada.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+  }, [key, version])
 
   return urls
 }
